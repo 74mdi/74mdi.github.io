@@ -1,0 +1,18 @@
+# 7amdi
+
+> Personal website of 7amdi, featuring recent Bluesky posts, top artists from Last.fm, and links to social profiles.
+
+## About
+
+This is 7amdi's personal site. It shows recent posts from Bluesky and top artists from Last.fm, with a short introduction and links to profiles and contact information.
+
+## Links
+
+- [Home](https://napping-copper-chipmunk.attie.site/): Main personal site.
+- [GitHub](https://github.com/74mdi): Code and projects.
+- [Bluesky](https://bsky.app/profile/7amdi.bsky.social): Recent posts shown on the site.
+- [Last.fm](https://www.last.fm/user/khrya): Listening profile and artist charts.
+- [Instagram](https://www.instagram.com/qaiik/): Instagram profile.
+- [X](https://x.com/74mdi): X profile.
+- [TikTok](https://www.tiktok.com/@ana7amdi): TikTok profile.
+- [Email](mailto:7amdi@tuta.io): Contact 7amdi.
