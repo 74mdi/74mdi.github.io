@@ -22,6 +22,6 @@ Set `LASTFM_API_KEY` as a server-side secret to enable top artists. Use `.env.lo
 
 ## GitHub Pages
 
-The `Deploy Next.js site to GitHub Pages` workflow builds a static export for `https://74mdi.github.io/74mdi/` and deploys it on pushes to `main` (and every six hours to refresh the Last.fm chart). The `LASTFM_API_KEY` repository Actions secret is used to generate the chart during each build. This static Pages build embeds the chart data into an exported JSON file; the key remains server-side during the build and is not included in the browser bundle. In repository settings, set Pages' build and deployment source to **GitHub Actions**.
+The `Deploy Next.js site to GitHub Pages` workflow builds a static export for `https://74mdi.github.io/` and deploys it on pushes to `main` (and every six hours to refresh the Last.fm chart). The `LASTFM_API_KEY` repository Actions secret is used to generate the chart during each build. This static Pages build embeds the chart data into an exported JSON file; the key remains server-side during the build and is not included in the browser bundle. In repository settings, set Pages' build and deployment source to **GitHub Actions**.
 
 The root route owns the shared metadata, robots policy, sitemap, JSON-LD, and generated Open Graph and Twitter cards. Route-specific pages inherit these defaults and can override them with their own metadata and image routes.
