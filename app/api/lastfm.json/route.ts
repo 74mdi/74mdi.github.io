@@ -1,9 +1,11 @@
 import { content } from '../../../src/content';
 
+export const dynamic = 'force-static';
+
 export async function GET() {
   const apiKey = process.env.LASTFM_API_KEY;
   if (!apiKey) {
-    return Response.json({ error: 'Last.fm is not configured.' }, { status: 503 });
+    return Response.json({ artists: [] });
   }
 
   const params = new URLSearchParams({
@@ -20,13 +22,13 @@ export async function GET() {
       signal: AbortSignal.timeout(8000),
     });
     if (!response.ok) {
-      return Response.json({ error: 'Last.fm request failed.' }, { status: 502 });
+      return Response.json({ artists: [] });
     }
 
     const data = await response.json();
     const artists = data?.topartists?.artist;
     if (!Array.isArray(artists)) {
-      return Response.json({ error: 'Unexpected Last.fm response.' }, { status: 502 });
+      return Response.json({ artists: [] });
     }
 
     return Response.json(
@@ -34,6 +36,6 @@ export async function GET() {
       { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' } },
     );
   } catch {
-    return Response.json({ error: 'Last.fm request failed.' }, { status: 502 });
+    return Response.json({ artists: [] });
   }
 }

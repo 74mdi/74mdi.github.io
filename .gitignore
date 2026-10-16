@@ -3,6 +3,7 @@
 .cloudflare/
 /node_modules/
 /.next/
+/out/
 /.vite/
 /.wrangler/
 /cloudflare-env.d.ts

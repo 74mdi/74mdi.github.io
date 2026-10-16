@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { content } from './content';
 import Reveal from './components/Reveal';
 import Hero from './components/Hero';
 import Music from './components/Music';

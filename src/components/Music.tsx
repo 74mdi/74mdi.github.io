@@ -24,7 +24,8 @@ export default function Music() {
   const [failed,setFailed] = useState(false);
   useEffect(()=>{
     const ctrl=new AbortController();
-    fetch('/api/lastfm',{signal:ctrl.signal}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(j=>{if(!Array.isArray(j?.artists))throw new Error();setArtists(j.artists);}).catch(e=>{if(e?.name!=='AbortError')setFailed(true);});
+    const basePath=process.env.NEXT_PUBLIC_BASE_PATH??'';
+    fetch(`${basePath}/api/lastfm.json`,{signal:ctrl.signal}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(j=>{if(!Array.isArray(j?.artists))throw new Error();setArtists(j.artists);}).catch(e=>{if(e?.name!=='AbortError')setFailed(true);});
     return()=>ctrl.abort();
   },[]);
   return <section aria-labelledby="music-heading">

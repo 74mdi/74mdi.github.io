@@ -8,7 +8,7 @@ This is 7amdi's personal site. It shows recent posts from Bluesky and top artist
 
 ## Links
 
-- [Home](https://napping-copper-chipmunk.attie.site/): Main personal site.
+- [Home](https://74mdi.github.io/74mdi/): Main personal site.
 - [GitHub](https://github.com/74mdi): Code and projects.
 - [Bluesky](https://bsky.app/profile/7amdi.bsky.social): Recent posts shown on the site.
 - [Last.fm](https://www.last.fm/user/khrya): Listening profile and artist charts.

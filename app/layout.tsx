@@ -18,10 +18,10 @@ export const metadata: Metadata = {
   category: 'personal',
   referrer: 'strict-origin-when-cross-origin',
   formatDetection: { email: false, address: false, telephone: false },
-  alternates: { canonical: '/' },
+  alternates: { canonical: siteUrl.toString() },
   openGraph: {
     type: 'website',
-    url: '/',
+    url: siteUrl.toString(),
     siteName: '7amdi',
     title: '7amdi',
     description: siteDescription,
