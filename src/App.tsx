@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import Reveal from './components/Reveal';
 import Hero from './components/Hero';
 import Music from './components/Music';
@@ -10,7 +11,7 @@ import TextHighlighter from './components/TextHighlighter';
 
 const THEME_KEY = '7amdi-theme';
 
-export default function App() {
+export default function App({ writingSection }: { writingSection?: ReactNode }) {
   // Keep the server render and the browser's first render identical. Restore
   // the saved preference after hydration to avoid mismatched toggle markup.
   const [theme, setTheme] = useState<BgTheme>('navy');
@@ -44,6 +45,7 @@ export default function App() {
     <main className="main-column">
       <Hero />
       <Reveal><Music /></Reveal>
+      {writingSection && <Reveal>{writingSection}</Reveal>}
       <Reveal><Posts /></Reveal>
       <Reveal><footer className="footer">
         <nav aria-label="Elsewhere">
