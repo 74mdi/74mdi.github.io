@@ -29,7 +29,14 @@ export async function generateMetadata({
       url,
       title: post.title,
       description: post.description,
+      images: [new URL('/opengraph-image', siteUrl).toString()],
       publishedTime: new Date(`${post.date}T00:00:00Z`).toISOString(),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: [new URL('/twitter-image', siteUrl).toString()],
     },
   };
 }
