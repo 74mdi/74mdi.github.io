@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500&display=swap');
 
 :root{--attie-surface-page:#0a0e2a;--attie-surface-raised:#121736;--attie-surface-sunken:#060818;--attie-surface-elevated:#181e42;--attie-surface-overlay:#141a3a;--attie-fg-default:#fff;--attie-fg-muted:rgba(255,255,255,.74);--attie-fg-subtle:rgba(255,255,255,.55);--attie-border-default:rgba(255,255,255,.22);--attie-border-strong:rgba(255,255,255,.42);--attie-border-subtle:rgba(255,255,255,.12);--attie-primary:#b9c4ff;--attie-primary-hover:#dde3ff;--attie-primary-fg:#0a0e2a;--attie-selection-bg:#c5ceff;--attie-selection-fg:#0a0e2a}
 :root{--attie-highlight:color-mix(in srgb,var(--attie-primary) 32%,transparent)}
@@ -142,3 +142,26 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 :root[data-theme=blue] .mdx-content .hljs-number,:root[data-theme=blue] .mdx-content .hljs-built_in,:root[data-theme=blue] .mdx-content .hljs-type{color:#9a5410}
 :root[data-theme=blue] .mdx-content .hljs-variable,:root[data-theme=blue] .mdx-content .hljs-params{color:#a13c69}
 @media(max-width:480px){.mdx-content pre{padding:12px;margin-inline:-4px}.mdx-content th,.mdx-content td{padding:8px 10px}.writing-article{border-radius:16px}}
+
+/* Writing pages use the full viewport width while keeping the same quiet site palette. */
+.main-column.writing-page{width:100%;max-width:none;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,4rem);gap:1.25rem}
+.writing-page .writing-article{width:100%;max-width:none;padding:clamp(18px,3.2vw,40px);border-radius:14px;background:color-mix(in srgb,var(--attie-surface-raised) 34%,transparent);box-shadow:none}
+.writing-page .writing-article:before{display:none}
+.writing-page .writing-article header{padding-bottom:18px}
+.writing-page .mdx-content{font-size:15px;line-height:1.8}
+.writing-page .mdx-content h1{font-size:clamp(30px,4vw,42px)}
+.writing-page .mdx-content h2{font-size:clamp(25px,3vw,32px)}
+.writing-page .mdx-content p,.writing-page .mdx-content li{max-width:none}
+.writing-page .mdx-content pre{border-radius:10px;box-shadow:none}
+.writing-page .mdx-content table{border-radius:9px;box-shadow:none}
+.writing-page .mdx-content img{max-height:72vh;object-fit:contain}
+:root[data-theme=blue] .writing-page .writing-article{background:rgba(255,255,255,.30);box-shadow:none}
+
+/* Arabic Bluesky text follows its script direction and uses a matching Naskh face. */
+.arabic-copy{font-family:'Noto Naskh Arabic','Instrument Serif',serif;font-size:1.12em;line-height:1.9;letter-spacing:0;direction:rtl;text-align:right}
+.post-text.arabic-copy{font-size:17px;line-height:1.95}
+.quote-text.arabic-copy{font-size:14px;line-height:1.9}
+.quote-author>[dir=rtl]{margin-left:auto}
+.arabic-copy .text-highlighter{background-position:right bottom}
+.arabic-copy .text-highlighter.highlight-on-hover:hover,.arabic-copy .text-highlighter.highlight-on-hover:focus-visible{background-position:right bottom}
+:root[data-theme=blue] .arabic-copy{color:#242849}

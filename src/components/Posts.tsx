@@ -13,6 +13,12 @@ type EmbedView={$type?:string;images?:ImageView[];external?:ExternalView;record?
 type FeedPost={uri:string;record?:{text?:string;createdAt?:string;facets?:Facet[]};embed?:EmbedView;likeCount?:number;replyCount?:number;repostCount?:number};
 type FeedResponse={feed?:{post:FeedPost}[]};
 
+const arabicScript=/[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]/;
+function textDirection(text?:string){
+  const arabic=!!text&&arabicScript.test(text);
+  return {dir:arabic?'rtl' as const:'auto' as const,lang:arabic?'ar':undefined,className:arabic?'arabic-copy':''};
+}
+
 function useFeed(){
   const [data,setData]=useState<FeedResponse|null>(null),[error,setError]=useState(false),[loading,setLoading]=useState(true),[attempt,setAttempt]=useState(0);
   useEffect(()=>{const ctrl=new AbortController();setLoading(true);setError(false);const q=new URLSearchParams({actor:content.bluesky,limit:'15',filter:'posts_no_replies'});
@@ -50,12 +56,13 @@ function BlurImage({src,alt,className='',style}:{src?:string;alt:string;classNam
 function Quote({record}:{record?:RecordView}){
   if(!record?.uri||record.$type!=='app.bsky.embed.record#viewRecord')return <p className="quote-unavailable">Quoted post is unavailable.</p>;
   const a=record.author,url=`https://bsky.app/profile/${a?.handle??''}/post/${record.uri.split('/').pop()}`;
-  return <a className="quote-card" href={url} target="_blank" rel="noreferrer"><span className="quote-author">{a?.avatar&&<img src={a.avatar} alt=""/>}<TextHighlighter triggerType="hover">{a?.displayName||a?.handle||'Unknown'}</TextHighlighter>{a?.handle&&<small><TextHighlighter triggerType="hover">@{a.handle}</TextHighlighter></small>}</span>{record.value?.text&&<span className="quote-text">{record.value.text}</span>}</a>;
+  const displayName=a?.displayName||a?.handle||'Unknown';
+  return <a className="quote-card" href={url} target="_blank" rel="noreferrer"><span className="quote-author">{a?.avatar&&<img src={a.avatar} alt=""/>}<span {...textDirection(displayName)}><TextHighlighter triggerType="hover">{displayName}</TextHighlighter></span>{a?.handle&&<small dir="ltr"><TextHighlighter triggerType="hover">@{a.handle}</TextHighlighter></small>}</span>{record.value?.text&&<span className={`quote-text ${textDirection(record.value.text).className}`} dir={textDirection(record.value.text).dir} lang={textDirection(record.value.text).lang}>{record.value.text}</span>}</a>;
 }
 function Media({embed,url}:{embed?:EmbedView;url:string}){
   if(!embed?.$type)return null;
   if(embed.$type==='app.bsky.embed.images#view')return embed.images?.length?<div className={`image-grid ${embed.images.length>1?'multiple':''}`}>{embed.images.slice(0,4).map((img,i)=><a key={i} href={url} target="_blank" rel="noreferrer" aria-label={img.alt?`Photo: ${img.alt}`:'View photo on Bluesky'}><BlurImage src={img.thumb??img.fullsize} alt={img.alt??''} style={img.aspectRatio&&embed.images?.length===1?{aspectRatio:`${img.aspectRatio.width}/${img.aspectRatio.height}`}:{}} /></a>)}</div>:null;
-  if(embed.$type==='app.bsky.embed.external#view'&&embed.external){const ext=embed.external;let host='';try{host=new URL(ext.uri).hostname.replace(/^www\./,'');}catch{}return <a className="external-card" href={ext.uri} target="_blank" rel="noreferrer">{ext.thumb&&<BlurImage src={ext.thumb} alt=""/>}<span>{host&&<small>{host}</small>}{ext.title&&<strong><TextHighlighter triggerType="hover">{ext.title}</TextHighlighter></strong>}{ext.description&&<em>{ext.description}</em>}</span></a>;}
+  if(embed.$type==='app.bsky.embed.external#view'&&embed.external){const ext=embed.external;let host='';try{host=new URL(ext.uri).hostname.replace(/^www\./,'');}catch{}return <a className="external-card" href={ext.uri} target="_blank" rel="noreferrer">{ext.thumb&&<BlurImage src={ext.thumb} alt=""/>}<span>{host&&<small dir="ltr">{host}</small>}{ext.title&&<strong {...textDirection(ext.title)}><TextHighlighter triggerType="hover">{ext.title}</TextHighlighter></strong>}{ext.description&&<em {...textDirection(ext.description)}>{ext.description}</em>}</span></a>;}
   if(embed.$type==='app.bsky.embed.video#view')return <a className="video-card" href={url} target="_blank" rel="noreferrer">{embed.thumbnail?<BlurImage src={embed.thumbnail} alt={embed.alt??''}/>:<span className="video-empty"/>}<b>▶ <TextHighlighter triggerType="hover">Watch on Bluesky</TextHighlighter></b></a>;
   if(embed.$type==='app.bsky.embed.record#view')return <Quote record={embed.record as RecordView}/>;
   if(embed.$type==='app.bsky.embed.recordWithMedia#view')return <div className="media-stack"><Media embed={embed.media} url={url}/><Quote record={(embed.record as {record?:RecordView}|undefined)?.record}/></div>;
@@ -70,7 +77,7 @@ function PostCard({post,index}:{post:FeedPost;index:number}){
   const stats=[post.replyCount?`${post.replyCount} ${post.replyCount===1?'reply':'replies'}`:null,post.repostCount?`${post.repostCount} ${post.repostCount===1?'repost':'reposts'}`:null,post.likeCount?`${post.likeCount} ${post.likeCount===1?'like':'likes'}`:null].filter(Boolean);
   return <li>{!ready&&images.map((src,i)=><img key={`${src}-${i}`} src={src} alt="" aria-hidden="true" className="preload" onLoad={()=>setLoaded(n=>n+1)} onError={()=>setLoaded(n=>n+1)}/>)}
     <motion.article ref={cardRef} layout className="post-card post-morph" initial={{opacity:0,filter:'blur(16px)',y:18,scale:.96,borderRadius:'46% 54% 58% 42% / 52% 44% 56% 48%'}} animate={ready&&inView?{opacity:1,filter:'blur(0px)',y:0,scale:1,borderRadius:'1rem'}:{opacity:0,filter:'blur(16px)',y:18,scale:.96,borderRadius:'46% 54% 58% 42% / 52% 44% 56% 48%'}} transition={{duration:.85,ease:[.22,1,.36,1],delay:Math.min(index,8)*.07}} aria-busy={!ready}>
-      {post.record?.text&&<p className="post-text"><RichText text={post.record.text} facets={post.record.facets}/></p>}
+      {post.record?.text&&<p className={`post-text ${textDirection(post.record.text).className}`} dir={textDirection(post.record.text).dir} lang={textDirection(post.record.text).lang}><RichText text={post.record.text} facets={post.record.facets}/></p>}
       <Media embed={post.embed} url={url}/><div className="post-meta"><a href={url} target="_blank" rel="noreferrer"><time dateTime={post.record?.createdAt}><TextHighlighter triggerType="hover">{date(post.record?.createdAt)}</TextHighlighter></time></a>{stats.map(s=><span key={s}>{s}</span>)}</div>
     </motion.article>
   </li>;
