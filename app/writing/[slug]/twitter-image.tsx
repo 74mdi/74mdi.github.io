@@ -7,6 +7,10 @@ export const alt = 'An article from 7amdi on a deep navy background.';
 export const size = imageSize;
 export const contentType = 'image/png';
 
+export function generateStaticParams() {
+  return mdxPosts.map(({ slug }) => ({ slug }));
+}
+
 export default async function TwitterImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = mdxPosts.find((item) => item.slug === slug);
