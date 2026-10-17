@@ -8,3 +8,6 @@ import FirstNote, { metadata as firstNote } from '../../../content/posts/first-n
 export const mdxPosts: RegisteredPost[] = [
   { slug: 'a-small-corner-of-the-web', ...firstNote, Content: FirstNote },
 ];
+
+/** Posts with draft metadata are available locally but omitted from published routes. */
+export const publishedPosts = mdxPosts.filter((post) => post.draft !== true);
