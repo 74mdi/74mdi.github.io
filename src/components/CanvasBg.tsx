@@ -14,14 +14,14 @@ export default function CanvasBg({ theme }: { theme: BgTheme }) {
     const washRGB = blue ? '115, 132, 220' : '110, 128, 255';
     const washAlpha = blue ? [0.13, 0.09, 0.07] : [0.14, 0.1, 0.08];
     const grainAlpha = blue ? [8, 22] : [30, 72];
-    let raf = 0, w = 0, h = 0;
+    let raf = 0, w = 0, h = 0, lastFrame = 0;
     const resize = () => {
       const dpr = Math.min(devicePixelRatio || 1, 2);
       w = innerWidth; h = innerHeight;
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
-    resize(); addEventListener('resize', resize);
+    resize();
     const makeGrain = () => {
       const tile = document.createElement('canvas'); tile.width = tile.height = 160;
       const c = tile.getContext('2d'); if (!c) return tile;
@@ -49,9 +49,30 @@ export default function CanvasBg({ theme }: { theme: BgTheme }) {
         ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
       }
     };
+    const onResize = () => { resize(); if (reduced) draw(0); };
+    const loop = (t: number) => {
+      if (document.hidden) { raf = 0; return; }
+      // The washes remain fluid at 30fps, with less work on low-power devices.
+      if (t - lastFrame >= 1000 / 30) {
+        if (t - lastGrain > 700) { grain = makeGrain(); lastGrain = t; }
+        draw(t);
+        lastFrame = t;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    const onVisibilityChange = () => {
+      if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
+      else if (!reduced && !raf) raf = requestAnimationFrame(loop);
+    };
+    addEventListener('resize', onResize);
+    document.addEventListener('visibilitychange', onVisibilityChange);
     if (reduced) draw(0);
-    else { const loop=(t:number)=>{ if(t-lastGrain>140){grain=makeGrain();lastGrain=t;} draw(t);raf=requestAnimationFrame(loop);}; raf=requestAnimationFrame(loop); }
-    return () => { cancelAnimationFrame(raf); removeEventListener('resize',resize); };
+    else if (!document.hidden) raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener('resize', onResize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
   }, [theme]);
   return <canvas ref={ref} aria-hidden="true" className="canvas-bg" />;
 }

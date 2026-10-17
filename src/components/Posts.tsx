@@ -51,7 +51,7 @@ function RichText({text,facets}:{text:string;facets?:Facet[]}){
 }
 function BlurImage({src,alt,className='',style}:{src?:string;alt:string;className?:string;style?:CSSProperties}){
   const [loaded,setLoaded]=useState(false);if(!src)return null;
-  return <img src={src} alt={alt} loading="lazy" onLoad={()=>setLoaded(true)} style={style} className={`img-blur ${loaded?'img-loaded':''} ${className}`} />;
+  return <img src={src} alt={alt} loading="lazy" decoding="async" onLoad={()=>setLoaded(true)} style={style} className={`img-blur ${loaded?'img-loaded':''} ${className}`} />;
 }
 function Quote({record}:{record?:RecordView}){
   if(!record?.uri||record.$type!=='app.bsky.embed.record#viewRecord')return <p className="quote-unavailable">Quoted post is unavailable.</p>;
@@ -85,10 +85,10 @@ function PostCard({post,index}:{post:FeedPost;index:number}){
 export default function Posts(){
   const {data,error,loading,retry}=useFeed();
   const posts=(data?.feed??[]).map(f=>f.post).filter(p=>(typeof p.record?.text==='string'&&p.record.text.trim().length>0)||p.embed?.$type);
+  if(!loading&&!error&&posts.length===0)return null;
   return <section aria-labelledby="posts-heading"><SectionHead id="posts-heading" title="Posts" href={`https://bsky.app/profile/${content.bluesky}`} hint={`@${content.bluesky}`}/>
     {loading?<div className="skeleton-stack" role="status" aria-label="Loading posts"><span className="sr-only">Loading posts…</span><Skeleton delay={0}/><Skeleton delay={120}/><Skeleton delay={240}/></div>
     :error?<div className="network-message"><p>Couldn’t load the latest posts.</p><button type="button" onClick={retry}>Try again</button></div>
-    :posts.length===0?<p className="muted-copy">No posts to show right now.</p>
     :<ul className="posts-list">{posts.map((p,i)=><PostCard key={p.uri} post={p} index={i}/>)}</ul>}
   </section>;
 }

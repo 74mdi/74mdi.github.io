@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { publishedPosts } from '../content/posts/registry';
 import SectionHead from './SectionHead';
+import WritingCard from './WritingCard';
 
 function formatDate(date: string) {
   return new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' }).format(
@@ -15,14 +15,16 @@ export default function CustomPosts() {
     <section aria-labelledby="writing-heading">
       <SectionHead id="writing-heading" title="Writing" />
       <ul className="writing-list">
-        {[...publishedPosts].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '')).map((post) => (
-          <li key={post.slug}>
-            <Link href={`/writing/${post.slug}/`} className="post-card writing-card">
-              <span className="writing-card-title">{post.title}</span>
-              <span className="writing-card-description">{post.description}</span>
-              {post.date && <time dateTime={post.date}>{formatDate(post.date)}</time>}
-            </Link>
-          </li>
+        {[...publishedPosts].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '')).map((post, index) => (
+          <WritingCard
+            key={post.slug}
+            slug={post.slug}
+            title={post.title}
+            description={post.description}
+            date={post.date}
+            formattedDate={post.date ? formatDate(post.date) : undefined}
+            index={index}
+          />
         ))}
       </ul>
     </section>
