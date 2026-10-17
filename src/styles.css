@@ -144,7 +144,7 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 @media(max-width:480px){.mdx-content pre{padding:12px;margin-inline:-4px}.mdx-content th,.mdx-content td{padding:8px 10px}.writing-article{border-radius:16px}}
 
 /* Writing pages use the full viewport width while keeping the same quiet site palette. */
-.main-column.writing-page{width:100%;max-width:none;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,4rem);gap:1.25rem}
+.main-column.writing-page{width:100%;max-width:none;min-height:100vh;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,4rem);gap:1.25rem;background:var(--attie-surface-page)}
 .writing-page .writing-article{width:100%;max-width:none;padding:clamp(18px,3.2vw,40px);border-radius:14px;background:color-mix(in srgb,var(--attie-surface-raised) 34%,transparent);box-shadow:none}
 .writing-page .writing-article:before{display:none}
 .writing-page .writing-article header{padding-bottom:18px}
@@ -154,8 +154,21 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .writing-page .mdx-content p,.writing-page .mdx-content li{max-width:none}
 .writing-page .mdx-content pre{border-radius:10px;box-shadow:none}
 .writing-page .mdx-content table{border-radius:9px;box-shadow:none}
-.writing-page .mdx-content img{max-height:72vh;object-fit:contain}
+.writing-page .mdx-content img{width:min(100%,36rem);max-height:72vh;margin-inline-start:0;margin-inline-end:auto;object-fit:contain;border-radius:10px;box-shadow:none}
 :root[data-theme=blue] .writing-page .writing-article{background:rgba(255,255,255,.30);box-shadow:none}
+
+/* Tables scroll as a unit, preserve Markdown column alignment, and stay readable. */
+.mdx-table-scroll{width:fit-content;max-width:min(100%,58rem);overflow-x:auto;margin:1.4em 0;border:1px solid var(--attie-border-subtle);border-radius:9px;scrollbar-color:var(--attie-border-default) transparent;scrollbar-width:thin}
+.mdx-content .mdx-table-scroll table{display:table;width:max-content;min-width:100%;max-width:none;margin:0;border:0;border-collapse:collapse;border-radius:0;background:transparent;font-size:13px;line-height:1.6}
+.mdx-content .mdx-table-scroll th,.mdx-content .mdx-table-scroll td{min-width:108px;padding:10px 14px;border-bottom:1px solid var(--attie-border-subtle)}
+.mdx-content .mdx-table-scroll th{background:color-mix(in srgb,var(--attie-surface-raised) 68%,transparent)}
+.mdx-content .mdx-table-scroll tr:last-child td{border-bottom:0}
+.mdx-content .mdx-table-scroll tbody tr:nth-child(even){background:color-mix(in srgb,var(--attie-primary) 3%,transparent)}
+.mdx-content img,.mdx-content .mdx-image{width:min(100%,36rem);margin:1.25em 0 1.5em;margin-inline-start:0;margin-inline-end:auto;border-radius:10px;box-shadow:none}
+.mdx-content figure img{margin-inline-start:0;margin-inline-end:auto}
+.mdx-demo-callout{margin:1.4em 0;padding:10px 0 10px 14px;border:0;border-left:1px solid var(--attie-border-default);border-radius:0;background:transparent;box-shadow:none;color:var(--attie-fg-muted)}
+.mdx-demo-label{display:block;margin-bottom:5px;color:var(--attie-fg-subtle);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+.mdx-demo-callout p{margin:.35em 0}
 
 /* Arabic Bluesky text follows its script direction and uses a matching Naskh face. */
 .arabic-copy{font-family:'Koft Arabic','Noto Naskh Arabic','Instrument Serif',serif;font-size:1.12em;line-height:1.9;letter-spacing:0;direction:rtl;text-align:right}
