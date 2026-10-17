@@ -131,6 +131,7 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .mdx-content figure img{margin:.5em auto}
 .mdx-content figcaption{color:var(--attie-fg-subtle);font-size:11px;text-align:center}
 .mdx-content section[data-footnotes]{margin-top:2.3em;padding-top:1em;border-top:1px solid var(--attie-border-subtle);font-size:12px;color:var(--attie-fg-subtle)}
+.mdx-demo-callout{margin:1.2em 0;padding:12px 14px;border:1px solid color-mix(in srgb,var(--attie-primary) 28%,var(--attie-border-subtle));border-radius:12px;background:color-mix(in srgb,var(--attie-primary) 8%,var(--attie-surface-raised));box-shadow:inset 3px 0 var(--attie-primary);color:var(--attie-fg-muted)}
 .mdx-content section[data-footnotes] h2{margin:.3em 0 .7em;font:500 10px/1.4 Inter,Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--attie-fg-subtle)}
 .mdx-content section[data-footnotes] ol{gap:.2em;padding-left:1.2em}
 .mdx-content [data-footnote-backref]{margin-left:.25em;color:var(--attie-primary);text-decoration:none}

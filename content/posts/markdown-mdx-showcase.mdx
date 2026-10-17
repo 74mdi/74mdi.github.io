@@ -1,0 +1,169 @@
+import DemoCallout from '../../src/components/MdxDemoCallout'
+
+export const metadata = {
+  title: 'Markdown & MDX showcase',
+  description: 'A live example of the Markdown and MDX formatting supported on this site.',
+  date: '2026-10-17',
+  draft: false,
+}
+
+export const koko = 'koko'
+
+# Markdown & MDX showcase
+
+This page is a working gallery of the formats supported by the writing section. It is written as an `.mdx` file.
+
+<DemoCallout>
+  **MDX component:** this callout is a React component declared in this file and rendered inside the article.
+</DemoCallout>
+
+## Headings
+
+# Heading one
+## Heading two
+### Heading three
+#### Heading four
+##### Heading five
+###### Heading six
+
+## Dividers and typography
+
+Three ways to add a divider:
+
+___
+
+---
+
+***
+
+Smart punctuation: (c), (r), (tm), +-; dots.. dots... dots..... questions?..... exclamations!....
+
+Straight quotes: "koko" and 'koko'.
+
+## Inline formatting
+
+**Bold with asterisks** and __bold with underscores__.
+
+*Italic with asterisks* and _italic with underscores_.
+
+~~Strikethrough~~, `inline code`, <ins>inserted text</ins>, <mark>highlighted text</mark>, H<sub>2</sub>O, and x<sup>2</sup>.
+
+## Blockquotes
+
+> A simple quote.
+>
+>> A quote nested inside another quote.
+>
+> > > And one nested three levels deep.
+
+## Lists
+
+Unordered lists can nest and mix marker styles:
+
++ A top-level item
++ Another item:
+  - A nested item
+    * A deeper item
+    + Mixed markers work too
++ One more top-level item!
+
+Ordered lists preserve their numbering:
+
+1. First item
+2. Second item
+3. Third item
+
+1. Markdown can auto-number.
+1. This is still the second item.
+
+57. Lists can start at a chosen number.
+1. And continue from there.
+
+Task lists are supported too:
+
+- [x] Markdown plugins configured
+- [ ] Write something lovely
+
+## Code
+
+Inline code: `const koko = "koko"`.
+
+Indented code:
+
+    // Indented code blocks work.
+    const greeting = 'koko'
+    console.log(greeting)
+
+Fenced code without a language:
+
+```
+koko
+another line
+```
+
+Fenced JavaScript receives syntax highlighting:
+
+```js
+var koko = function (value) {
+  return value++;
+};
+
+console.log(koko(5));
+```
+
+## Tables
+
+| Feature | Example |
+| ------ | ----------- |
+| Bold | **koko** |
+| Link | [Home](/) |
+| Code | `koko` |
+
+Alignment is kept from the Markdown table definition:
+
+| Left | Center | Right |
+| :--- | :---: | ---: |
+| koko | koko | koko |
+| Markdown | and | MDX |
+
+## Links and images
+
+[A link to the home page](/)
+
+[A titled link](/ "Back to the homepage")
+
+![A square placeholder image](https://placehold.jp/ffffff/000000/150x150.png?text=koko)
+
+![A titled placeholder image](https://placehold.jp/ffffff/000000/150x150.png?text=koko "A simple placeholder")
+
+Reference-style links also work: [visit home][home].
+
+[home]: / "Home page"
+
+Reference-style image:
+
+![Another placeholder][sample-image]
+
+[sample-image]: https://placehold.jp/ffffff/000000/150x150.png?text=koko "Reference image"
+
+## Footnotes and emoji
+
+Here is a numbered footnote[^first], another one[^second], and an inline footnote^[Inline footnotes work as well.].
+
+[^first]: A footnote can include **formatted text**.
+
+    It can also continue in an indented paragraph.
+
+[^second]: A short second footnote.
+
+Emoji shortcode (unknown names remain literal): :koko: and emoticon :-) .
+
+## MDX values and JSX
+
+This file exports a JavaScript value named `koko`; its value is **{koko}**.
+
+<DemoCallout>
+  MDX supports JSX expressions and custom React components alongside Markdown.
+</DemoCallout>
+
+Inline HTML such as <mark>mark</mark>, <ins>insert</ins>, <sup>superscript</sup>, and <sub>subscript</sub> is styled to match both themes.
