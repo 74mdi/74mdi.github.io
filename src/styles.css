@@ -216,6 +216,10 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .writing-page .mdx-demo-callout{margin:1.25em 0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;color:var(--attie-fg-muted)}
 .writing-page .mdx-demo-label{display:none}
 
+/* Quotes stay quiet: a single rule, with no card treatment. */
+.mdx-content blockquote{margin:1.1em 0;padding:.05em 0 .05em 1rem;border:0;border-left:1px solid var(--attie-border-default);border-radius:0;background:none;color:var(--attie-fg-muted);box-shadow:none}
+.mdx-content blockquote blockquote{margin:.65em 0;border-left-color:var(--attie-border-subtle);background:none}
+
 /* Arabic Bluesky text follows its script direction and uses a matching Naskh face. */
 .arabic-copy{font-family:'Koft Arabic','Noto Naskh Arabic','Instrument Serif',serif;font-size:1.12em;line-height:1.9;letter-spacing:0;direction:rtl;text-align:right}
 .post-text.arabic-copy{font-size:17px;line-height:1.95}
