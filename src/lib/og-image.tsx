@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ImageResponse } from 'next/og';
 import { content } from '../content';
+import { siteDescription } from './site';
 import { signaturePaths } from '../signaturePaths';
 
 export const imageSize = { width: 1200, height: 630 };
@@ -67,6 +68,9 @@ export async function generateSiteImage() {
             {content.lines
               .filter((line) => !/\blast\.fm\b|\bkhrya\b/i.test(line))
               .map((line) => <div key={line}>{line}</div>)}
+          </div>
+          <div style={{ maxWidth: 1000, color: 'rgba(255,255,255,.62)', fontSize: 18, lineHeight: 1.5 }}>
+            {siteDescription}
           </div>
         </div>
       </div>
