@@ -16,12 +16,12 @@ Install dependencies with `bun install`. Common commands:
 - `bun run check:compat` — check the app against vinext's Next.js API support
 - `bun run dev:next` — use the standard Next.js dev server
 
-Set `NEXT_PUBLIC_SITE_URL` to the site's public HTTPS origin in the Cloudflare build environment. This value supplies the canonical URL, sitemap, Open Graph URL, and structured data. It currently falls back to the original Attie site URL.
+Set `NEXT_PUBLIC_SITE_URL` to the site's public HTTPS origin in the Cloudflare build environment. This value supplies the canonical URL, sitemap, Open Graph URL, and structured data. It defaults to `https://7amdi.is-a.dev/`.
 
 Set `LASTFM_API_KEY` as a server-side secret to enable top artists. Use `.env.local` for the Next.js development server and `.dev.vars` for the Cloudflare Vite development server (templates are provided). For production, add it as a Cloudflare Worker secret with `bunx wrangler secret put LASTFM_API_KEY`. The key is read by the server-side `/api/lastfm.json` handler and is never included in the browser bundle.
 
 ## GitHub Pages
 
-The `Deploy Next.js site to GitHub Pages` workflow builds a static export for `https://74mdi.github.io/` and deploys it on pushes to `main` (and every six hours to refresh the Last.fm chart). The `LASTFM_API_KEY` repository Actions secret is used to generate the chart during each build. This static Pages build embeds the chart data into an exported JSON file; the key remains server-side during the build and is not included in the browser bundle. In repository settings, set Pages' build and deployment source to **GitHub Actions**.
+The `Deploy Next.js site to GitHub Pages` workflow builds a static export for `https://7amdi.is-a.dev/` and deploys it on pushes to `main` (and every six hours to refresh the Last.fm chart). `public/CNAME` configures this custom domain. The `LASTFM_API_KEY` repository Actions secret is used to generate the chart during each build. This static Pages build embeds the chart data into an exported JSON file; the key remains server-side during the build and is not included in the browser bundle. In repository settings, set Pages' build and deployment source to **GitHub Actions** and the custom domain to `7amdi.is-a.dev`.
 
 The root route owns the shared metadata, robots policy, sitemap, JSON-LD, and generated Open Graph and Twitter cards. Route-specific pages inherit these defaults and can override them with their own metadata and image routes.

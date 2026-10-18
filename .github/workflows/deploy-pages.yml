@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAGES: 'true'
-      NEXT_PUBLIC_SITE_URL: https://74mdi.github.io/
+      NEXT_PUBLIC_SITE_URL: https://7amdi.is-a.dev/
       LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
     steps:
       - name: Checkout

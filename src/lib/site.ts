@@ -1,6 +1,6 @@
 /** Public origin used for canonical URLs, structured data, and the sitemap. */
 export const siteUrl = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://napping-copper-chipmunk.attie.site',
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://7amdi.is-a.dev/',
 );
 
 export const siteDescription =
