@@ -10,7 +10,11 @@ import WritingPageBackground from '../../../src/components/WritingPageBackground
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return publishedPosts.map(({ slug }) => ({ slug }));
+  // Next static export requires at least one generated path for a dynamic
+  // segment. Keep a private not-found path when every article is a draft.
+  return publishedPosts.length
+    ? publishedPosts.map(({ slug }) => ({ slug }))
+    : [{ slug: '__drafts-hidden' }];
 }
 
 export async function generateMetadata({
