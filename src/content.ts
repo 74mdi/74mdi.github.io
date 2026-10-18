@@ -3,7 +3,7 @@ export const content = {
   name: '7amdi',
   lines: [
     'I’m a developer building things for the web.',
-    'Posting into the void as @7amdi on Bluesky.',
+    'Posting into ikhan as @7amdi on Bluesky.',
     'Listening to everything as khrya on Last.fm.',
   ],
   bluesky: '7amdi.bsky.social',
