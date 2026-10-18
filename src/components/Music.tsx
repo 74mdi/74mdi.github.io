@@ -23,12 +23,18 @@ export default function Music() {
   const [charts,setCharts] = useState<Charts | null>(null);
   const [chart,setChart] = useState<'artists'|'songs'>('artists');
   const [failed,setFailed] = useState(false);
+  const [attempt,setAttempt] = useState(0);
   useEffect(()=>{
     const ctrl=new AbortController();
     const basePath=process.env.NEXT_PUBLIC_BASE_PATH??'';
-    fetch(`${basePath}/api/lastfm.json`,{signal:ctrl.signal}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(j=>{if(!Array.isArray(j?.artists)||!Array.isArray(j?.songs))throw new Error();setCharts(j);}).catch(e=>{if(e?.name!=='AbortError')setFailed(true);});
+    setCharts(null);
+    setFailed(false);
+    fetch(`${basePath}/api/lastfm.json?v=2&retry=${attempt}`,{signal:ctrl.signal}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(j=>{
+      if(!Array.isArray(j?.artists))throw new Error();
+      setCharts({artists:j.artists,songs:Array.isArray(j.songs)?j.songs:[]});
+    }).catch(e=>{if(e?.name!=='AbortError')setFailed(true);});
     return()=>ctrl.abort();
-  },[]);
+  },[attempt]);
   const items=charts?.[chart];
   return <section aria-labelledby="music-heading">
     <SectionHead id="music-heading" title={chart==='artists'?'Top artists':'Top songs'} href={`https://www.last.fm/user/${lastfm.user}`} hint={`last.fm/user/${lastfm.user}`} />
@@ -36,7 +42,7 @@ export default function Music() {
       <button type="button" aria-pressed={chart==='artists'} onClick={()=>setChart('artists')}>Artists</button>
       <button type="button" aria-pressed={chart==='songs'} onClick={()=>setChart('songs')}>Songs</button>
     </div>
-    {failed&&<p className="muted-copy">Couldn’t reach Last.fm right now — try the profile link above.</p>}
+    {failed&&<div className="network-message"><p>Couldn’t reach Last.fm right now — try the profile link above.</p><button type="button" onClick={()=>setAttempt(value=>value+1)}>Try again</button></div>}
     {!failed&&<div className={`artist-list-space ${items?.length===0?'is-settled':''}`} aria-busy={!charts}>
       {!charts&&<div className="artist-skeleton" role="status" aria-label={`Loading top ${chart}`}>
         {Array.from({length:8},(_,i)=><div className="artist-skeleton-row" key={i}><i/><i/><i/></div>)}
