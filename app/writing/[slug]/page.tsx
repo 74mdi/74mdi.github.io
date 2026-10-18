@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { publishedPosts } from '../../../src/content/posts/registry';
 import { siteUrl } from '../../../src/lib/site';
+import MdxReveal from '../../../src/components/MdxReveal';
+import SiteFooter from '../../../src/components/SiteFooter';
+import WritingPageBackground from '../../../src/components/WritingPageBackground';
 
 export const dynamicParams = false;
 
@@ -53,6 +56,8 @@ export default async function WritingPostPage({
   const PostContent = post.Content;
 
   return (
+    <>
+    <WritingPageBackground />
     <main className="main-column writing-page">
       <Link href="/" className="writing-back">← Home</Link>
       <article className="writing-article">
@@ -61,8 +66,10 @@ export default async function WritingPostPage({
           <h1>{post.title}</h1>
           <p className="writing-description">{post.description}</p>
         </header>
-        <div className="mdx-content"><PostContent /></div>
+        <MdxReveal><PostContent /></MdxReveal>
       </article>
+      <SiteFooter className="writing-footer" />
     </main>
+    </>
   );
 }
