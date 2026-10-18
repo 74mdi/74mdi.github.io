@@ -59,10 +59,12 @@ export default async function WritingPostPage({
     <>
     <WritingPageBackground />
     <main className="main-column writing-page">
-      <Link href="/" className="writing-back">← Home</Link>
+      <div className="writing-topbar">
+        <Link href="/" className="writing-back">← Home</Link>
+        {post.date && <time className="writing-date" dateTime={post.date}>{post.date}</time>}
+      </div>
       <article className="writing-article">
         <header>
-          {post.date && <p className="writing-date"><time dateTime={post.date}>{post.date}</time></p>}
           <h1>{post.title}</h1>
           <p className="writing-description">{post.description}</p>
         </header>
