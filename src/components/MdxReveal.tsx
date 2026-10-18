@@ -32,7 +32,7 @@ export default function MdxReveal({ children, className = '' }: { children: Reac
         entry.target.classList.add('mdx-morph-visible');
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px 8% 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px 8% 0px' });
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);

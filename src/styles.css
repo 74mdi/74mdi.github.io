@@ -206,6 +206,14 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 @media(min-width:640px){.main-column.writing-page{padding-inline:2rem}}
 @media(max-width:480px){.writing-page .mdx-content pre{margin-inline:0}}
 
+/* Keep article reveals sharp once visible and let tables size to their cells. */
+.writing-page .mdx-content .mdx-morph-visible{opacity:1!important;filter:none!important;transform:none!important}
+.writing-page .mdx-content .mdx-image-settled{opacity:1!important;filter:none!important;transform:none!important;border-radius:10px!important}
+.writing-page .mdx-table-scroll{width:max-content;max-width:100%;margin-inline:0}
+.writing-page .mdx-content .mdx-table-scroll table{width:max-content;min-width:0}
+.writing-page .mdx-demo-callout{margin:1.25em 0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;color:var(--attie-fg-muted)}
+.writing-page .mdx-demo-label{display:none}
+
 /* Arabic Bluesky text follows its script direction and uses a matching Naskh face. */
 .arabic-copy{font-family:'Koft Arabic','Noto Naskh Arabic','Instrument Serif',serif;font-size:1.12em;line-height:1.9;letter-spacing:0;direction:rtl;text-align:right}
 .post-text.arabic-copy{font-size:17px;line-height:1.95}

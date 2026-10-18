@@ -17,6 +17,7 @@ export default function MdxImage({ src, alt, title, width, height, className = '
   const inView = useInView(ref, { once: true, amount: 0.12 });
   const reduceMotion = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
+  const [settled, setSettled] = useState(false);
   const ready = loaded && (inView || reduceMotion);
 
   useEffect(() => {
@@ -46,11 +47,14 @@ export default function MdxImage({ src, alt, title, width, height, className = '
       width={width}
       height={height}
       ref={ref}
-      className={`mdx-image ${className}`}
+      className={`mdx-image ${settled ? 'mdx-image-settled' : ''} ${className}`}
       loading="lazy"
       decoding="async"
       onLoad={() => setLoaded(true)}
       onError={() => setLoaded(true)}
+      onAnimationComplete={() => {
+        if (ready) setSettled(true);
+      }}
       initial={reduceMotion ? false : hidden}
       animate={reduceMotion || ready ? shown : hidden}
       transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
