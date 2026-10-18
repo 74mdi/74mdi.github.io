@@ -217,6 +217,11 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .writing-page .mdx-demo-label{display:none}
 .mdx-content pre{width:fit-content;max-width:100%}
 .mdx-content pre code{white-space:pre}
+.chart-switch{display:inline-flex;gap:14px;margin:0 0 8px}
+.chart-switch button{padding:4px 0;border:0;border-bottom:1px solid transparent;background:none;color:var(--attie-fg-subtle);font:400 11px Inter,Arial,sans-serif;cursor:pointer;transition:color .2s,border-color .2s}
+.chart-switch button:hover,.chart-switch button[aria-pressed=true]{border-bottom-color:var(--attie-primary);color:var(--attie-fg-default)}
+.artist-name{display:flex;flex-direction:column}
+.artist-detail{margin-top:2px;color:var(--attie-fg-subtle);font-size:10px;font-weight:300}
 
 /* Quotes stay quiet: a single rule, with no card treatment. */
 .mdx-content blockquote{margin:1.1em 0;padding:.05em 0 .05em 1rem;border:0;border-left:1px solid var(--attie-border-default);border-radius:0;background:none;color:var(--attie-fg-muted);box-shadow:none}
