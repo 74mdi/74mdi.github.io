@@ -194,6 +194,16 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 @keyframes writingPageIn{from{opacity:0;filter:blur(18px);transform:translateY(20px) scale(.985)}to{opacity:1;filter:blur(0);transform:none}}
 @media(prefers-reduced-motion:reduce){.writing-page{animation:none!important}}
 
+/* Match the home page gutters and keep every article block inside them. */
+.main-column.writing-page{padding-inline:1.25rem}
+.writing-page .writing-article,.writing-page .writing-article>*,.writing-page .mdx-content,.writing-page .mdx-content>*{min-width:0;max-width:100%}
+.writing-page .mdx-content{overflow-wrap:anywhere}
+.writing-page .mdx-table-scroll{width:100%;max-width:100%;margin-inline:0}
+.writing-page .mdx-content pre{max-width:100%;margin-inline:0}
+.writing-page .mdx-content img,.writing-page .mdx-content .mdx-image{max-width:100%;margin-inline-start:0;margin-inline-end:auto}
+@media(min-width:640px){.main-column.writing-page{padding-inline:2rem}}
+@media(max-width:480px){.writing-page .mdx-content pre{margin-inline:0}}
+
 /* Arabic Bluesky text follows its script direction and uses a matching Naskh face. */
 .arabic-copy{font-family:'Koft Arabic','Noto Naskh Arabic','Instrument Serif',serif;font-size:1.12em;line-height:1.9;letter-spacing:0;direction:rtl;text-align:right}
 .post-text.arabic-copy{font-size:17px;line-height:1.95}
