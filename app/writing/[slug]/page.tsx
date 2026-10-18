@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { publishedPosts } from '../../../src/content/posts/registry';
+import { postStaticParams, publishedPosts } from '../../../src/content/posts/registry';
 import { siteUrl } from '../../../src/lib/site';
 import MdxReveal from '../../../src/components/MdxReveal';
 import SiteFooter from '../../../src/components/SiteFooter';
@@ -10,11 +10,7 @@ import WritingPageBackground from '../../../src/components/WritingPageBackground
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  // Next static export requires at least one generated path for a dynamic
-  // segment. Keep a private not-found path when every article is a draft.
-  return publishedPosts.length
-    ? publishedPosts.map(({ slug }) => ({ slug }))
-    : [{ slug: '__drafts-hidden' }];
+  return postStaticParams;
 }
 
 export async function generateMetadata({
@@ -36,14 +32,12 @@ export async function generateMetadata({
       url,
       title: post.title,
       description: post.description,
-      images: [new URL('/opengraph-image', siteUrl).toString()],
       ...(post.date ? { publishedTime: new Date(`${post.date}T00:00:00Z`).toISOString() } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: [new URL('/twitter-image', siteUrl).toString()],
     },
   };
 }

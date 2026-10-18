@@ -7,7 +7,7 @@ export const dynamic = 'force-static';
 export default function manifest(): MetadataRoute.Manifest {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
   return {
-    name: `${content.name} — into the void`,
+    name: content.name,
     short_name: content.name,
     description: siteDescription,
     start_url: `${basePath}/`,

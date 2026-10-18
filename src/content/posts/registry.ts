@@ -13,3 +13,8 @@ export const mdxPosts: RegisteredPost[] = [
 
 /** Posts with draft metadata are available locally but omitted from published routes. */
 export const publishedPosts = mdxPosts.filter((post) => post.draft !== true);
+
+/** Next static export requires one path when every article is currently a draft. */
+export const postStaticParams = publishedPosts.length
+  ? publishedPosts.map(({ slug }) => ({ slug }))
+  : [{ slug: '__drafts-hidden' }];
