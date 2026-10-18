@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useInView, useReducedMotion } from 'motion/react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function WritingCard({
   slug,
@@ -20,42 +19,36 @@ export default function WritingCard({
   index: number;
 }) {
   const ref = useRef<HTMLLIElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.12 });
-  const reduceMotion = useReducedMotion();
-  const visible = inView || reduceMotion;
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0, rootMargin: '80px 0px' });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.li
+    <li
       ref={ref}
-      layout
-      className="post-card writing-card"
-      initial={reduceMotion ? false : {
-        opacity: 0,
-        filter: 'blur(16px)',
-        y: 18,
-        scale: 0.96,
-        borderRadius: '46% 54% 58% 42% / 52% 44% 56% 48%',
-      }}
-      animate={visible ? {
-        opacity: 1,
-        filter: 'blur(0px)',
-        y: 0,
-        scale: 1,
-        borderRadius: '1rem',
-      } : {
-        opacity: 0,
-        filter: 'blur(16px)',
-        y: 18,
-        scale: 0.96,
-        borderRadius: '46% 54% 58% 42% / 52% 44% 56% 48%',
-      }}
-      transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: Math.min(index, 8) * 0.07 }}
+      className={`post-card writing-card writing-card-reveal ${visible ? 'is-visible' : ''}`}
+      style={{ transitionDelay: `${Math.min(index, 8) * 70}ms` }}
     >
       <Link href={`/writing/${slug}/`} className="writing-card-link">
         <span className="writing-card-title">{title}</span>
         <span className="writing-card-description">{description}</span>
         {date && formattedDate && <time dateTime={date}>{formattedDate}</time>}
       </Link>
-    </motion.li>
+    </li>
   );
 }

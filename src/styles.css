@@ -64,7 +64,6 @@
 .external-card>span{padding:8px}
 @media(min-width:640px){.signature-mark{height:48px}}
 a{color:inherit;text-decoration:inherit}
-.post-morph{transition:none}
 .cursor-pointer{cursor:pointer}
 .artist-list-space{position:relative;min-height:264px}
 .artist-list-space.is-settled{min-height:0}
@@ -219,6 +218,23 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 /* Quotes stay quiet: a single rule, with no card treatment. */
 .mdx-content blockquote{margin:1.1em 0;padding:.05em 0 .05em 1rem;border:0;border-left:1px solid var(--attie-border-default);border-radius:0;background:none;color:var(--attie-fg-muted);box-shadow:none}
 .mdx-content blockquote blockquote{margin:.65em 0;border-left-color:var(--attie-border-subtle);background:none}
+
+/* Keep the reveal work in CSS so the content renders without a motion runtime. */
+.post-morph{transition:opacity 1.15s cubic-bezier(.22,1,.36,1),filter 1.15s cubic-bezier(.22,1,.36,1),transform 1.15s cubic-bezier(.22,1,.36,1),border-radius 1.25s cubic-bezier(.22,1,.36,1)}
+.post-morph.is-ready{filter:none}
+.img-blur{transition:filter .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1),border-radius 1.2s cubic-bezier(.22,1,.36,1)}
+.writing-card-reveal{opacity:0;filter:blur(12px);transform:translateY(16px) scale(.975);border-radius:46% 54% 58% 42% / 52% 44% 56% 48%;transition:opacity 1.05s cubic-bezier(.22,1,.36,1),filter 1.05s cubic-bezier(.22,1,.36,1),transform 1.05s cubic-bezier(.22,1,.36,1),border-radius 1.2s cubic-bezier(.22,1,.36,1)}
+.writing-card-reveal.is-visible{opacity:1;filter:none;transform:none;border-radius:14px}
+.writing-card-reveal.is-visible:hover{transform:translateY(-2px)}
+.artist-list-morph{animation:artistListIn 1.05s cubic-bezier(.22,1,.36,1) both}
+.artist-row-in{animation:artistRowIn .4s cubic-bezier(.22,1,.36,1) both}
+@keyframes artistListIn{from{opacity:0;filter:blur(12px);transform:scale(.975);border-radius:48% 52% 46% 54%}to{opacity:1;filter:none;transform:none;border-radius:.5rem}}
+@keyframes artistRowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mdx-content .mdx-morph{filter:blur(12px);transition:opacity 1.15s cubic-bezier(.22,1,.36,1),filter 1.15s cubic-bezier(.22,1,.36,1),transform 1.15s cubic-bezier(.22,1,.36,1),border-radius 1.25s cubic-bezier(.22,1,.36,1)}
+.mdx-content .mdx-morph-visible{filter:none!important}
+.mdx-content .mdx-image-reveal{opacity:0;filter:blur(12px);transform:translateY(14px) scale(.975);border-radius:46% 54% 58% 42% / 52% 44% 56% 48%;transition:opacity 1.15s cubic-bezier(.22,1,.36,1),filter 1.15s cubic-bezier(.22,1,.36,1),transform 1.15s cubic-bezier(.22,1,.36,1),border-radius 1.25s cubic-bezier(.22,1,.36,1)}
+.mdx-content .mdx-image-reveal.is-visible{opacity:1;filter:none;transform:none;border-radius:10px}
+@media(prefers-reduced-motion:reduce){.writing-card-reveal,.artist-list-morph,.artist-row-in,.mdx-content .mdx-image-reveal{animation:none!important;transition:none!important;opacity:1!important;filter:none!important;transform:none!important;border-radius:10px!important}}
 
 /* Arabic Bluesky text follows its script direction and uses a matching Naskh face. */
 .arabic-copy{font-family:'Koft Arabic','Noto Naskh Arabic','Instrument Serif',serif;font-size:1.12em;line-height:1.9;letter-spacing:0;direction:rtl;text-align:right}

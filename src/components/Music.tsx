@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
 import { content } from '../content';
 import SectionHead from './SectionHead';
 import ScrambleHover from '@/components/fancy/text/scramble-hover';
@@ -9,13 +8,13 @@ type Artist = { name: string; playcount: string; url: string };
 
 function ArtistRow({ artist, index }: { artist: Artist; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
-  return <motion.li layout initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{duration:.35,ease:'circInOut',delay:index*.05+.5}}>
+  return <li className="artist-row-in" style={{animationDelay:`${index*.05+.5}s`}}>
     <a href={artist.url} target="_blank" rel="noreferrer" onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)} onFocus={()=>setIsHovered(true)} onBlur={()=>setIsHovered(false)}>
       <span className="artist-rank">{String(index+1).padStart(2,'0')}</span>
       <span className="artist-name"><ScrambleHover text={artist.name} scrambleSpeed={50} maxIterations={8} useOriginalCharsOnly className="cursor-pointer" isHovered={isHovered}/></span>
       <span className="artist-plays">{Number(artist.playcount).toLocaleString()} plays</span>
     </a>
-  </motion.li>;
+  </li>;
 }
 
 export default function Music() {
@@ -34,9 +33,9 @@ export default function Music() {
     {!failed&&<div className={`artist-list-space ${artists?.length===0?'is-settled':''}`} aria-busy={!artists}>
       {!failed&&!artists&&<div className="artist-skeleton" role="status" aria-label="Loading artist charts">{Array.from({length:8},(_,i)=><div className="artist-skeleton-row" key={i}><i/><i/><i/></div>)}</div>}
       {artists&&artists.length===0&&<p className="muted-copy">No scrobbles yet for this period.</p>}
-      {artists&&artists.length>0&&<motion.ol className="artist-list artist-list-morph" initial={{opacity:0,height:0,filter:'blur(12px)',scale:.96,borderRadius:'48% 52% 46% 54%'}} animate={{opacity:1,height:'auto',filter:'blur(0px)',scale:1,borderRadius:'0.5rem'}} transition={{duration:.85,ease:[.22,1,.36,1]}}>
+      {artists&&artists.length>0&&<ol className="artist-list artist-list-morph is-visible">
         {artists.map((artist,index)=><ArtistRow key={artist.name} artist={artist} index={index}/>)}
-      </motion.ol>}
+      </ol>}
     </div>}
   </section>;
 }

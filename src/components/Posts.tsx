@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { motion, useInView } from 'motion/react';
 import { content } from '../content';
 import SectionHead from './SectionHead';
 import TextHighlighter from './TextHighlighter';
@@ -28,19 +27,6 @@ function useFeed(){
 }
 function date(iso?:string){if(!iso)return '';const d=new Date(iso);return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat(undefined,{dateStyle:'medium'}).format(d);}
 function postUrl(uri:string){return `https://bsky.app/profile/${content.bluesky}/post/${uri.split('/').pop()}`;}
-function collectImageUrls(embed?:EmbedView):string[]{
-  const urls:string[]=[];
-  const walk=(item?:EmbedView)=>{
-    if(!item)return;
-    item.images?.forEach(image=>{const src=image.thumb??image.fullsize;if(src)urls.push(src);});
-    if(item.external?.thumb)urls.push(item.external.thumb);
-    if(item.thumbnail)urls.push(item.thumbnail);
-    const record=(item.record as {record?:RecordView}|undefined)?.record??item.record as RecordView|undefined;
-    if(record?.author?.avatar)urls.push(record.author.avatar);
-    if(item.media)walk(item.media);
-  };
-  walk(embed);return [...new Set(urls)].slice(0,8);
-}
 function RichText({text,facets}:{text:string;facets?:Facet[]}){
   if(!facets?.length)return <>{text}</>;
   const bytes=new TextEncoder().encode(text),decoder=new TextDecoder(),parts:ReactNode[]=[];let cursor=0;
@@ -70,16 +56,24 @@ function Media({embed,url}:{embed?:EmbedView;url:string}){
 }
 function Skeleton({delay}:{delay:number}){return <div aria-hidden="true" className="skeleton post-card" style={{animationDelay:`${delay}ms`}}><i/><i/><i/><i/></div>;}
 function PostCard({post,index}:{post:FeedPost;index:number}){
-  const url=postUrl(post.uri),images=collectImageUrls(post.embed),[ready,setReady]=useState(images.length===0),[loaded,setLoaded]=useState(0);
+  const url=postUrl(post.uri),[visible,setVisible]=useState(false);
   const cardRef=useRef<HTMLElement>(null);
-  const inView=useInView(cardRef,{once:true,amount:.12});
-  useEffect(()=>{if(ready||images.length===0||loaded>=images.length){setReady(true);return;}const t=setTimeout(()=>setReady(true),5000);return()=>clearTimeout(t);},[loaded,images.length,ready]);
+  useEffect(()=>{
+    const element=cardRef.current;
+    if(!element)return;
+    if(!('IntersectionObserver' in window)){setVisible(true);return;}
+    const observer=new IntersectionObserver(([entry])=>{
+      if(entry.isIntersecting){setVisible(true);observer.disconnect();}
+    },{threshold:0,rootMargin:'80px 0px'});
+    observer.observe(element);
+    return()=>observer.disconnect();
+  },[]);
   const stats=[post.replyCount?`${post.replyCount} ${post.replyCount===1?'reply':'replies'}`:null,post.repostCount?`${post.repostCount} ${post.repostCount===1?'repost':'reposts'}`:null,post.likeCount?`${post.likeCount} ${post.likeCount===1?'like':'likes'}`:null].filter(Boolean);
-  return <li>{!ready&&images.map((src,i)=><img key={`${src}-${i}`} src={src} alt="" aria-hidden="true" className="preload" onLoad={()=>setLoaded(n=>n+1)} onError={()=>setLoaded(n=>n+1)}/>)}
-    <motion.article ref={cardRef} layout className="post-card post-morph" initial={{opacity:0,filter:'blur(16px)',y:18,scale:.96,borderRadius:'46% 54% 58% 42% / 52% 44% 56% 48%'}} animate={ready&&inView?{opacity:1,filter:'blur(0px)',y:0,scale:1,borderRadius:'1rem'}:{opacity:0,filter:'blur(16px)',y:18,scale:.96,borderRadius:'46% 54% 58% 42% / 52% 44% 56% 48%'}} transition={{duration:.85,ease:[.22,1,.36,1],delay:Math.min(index,8)*.07}} aria-busy={!ready}>
+  return <li>
+    <article ref={cardRef} className={`post-card post-morph ${visible?'is-ready':''}`} style={{transitionDelay:`${Math.min(index,8)*70}ms`}} aria-busy={!visible}>
       {post.record?.text&&<p className={`post-text ${textDirection(post.record.text).className}`} dir={textDirection(post.record.text).dir} lang={textDirection(post.record.text).lang}><RichText text={post.record.text} facets={post.record.facets}/></p>}
       <Media embed={post.embed} url={url}/><div className="post-meta"><a href={url} target="_blank" rel="noreferrer"><time dateTime={post.record?.createdAt}><TextHighlighter triggerType="hover">{date(post.record?.createdAt)}</TextHighlighter></time></a>{stats.map(s=><span key={s}>{s}</span>)}</div>
-    </motion.article>
+    </article>
   </li>;
 }
 export default function Posts(){
