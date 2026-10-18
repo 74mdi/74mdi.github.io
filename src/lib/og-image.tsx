@@ -31,7 +31,7 @@ export async function generateSiteImage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           padding: '64px 76px 52px',
           color: '#fff',
           background: 'radial-gradient(ellipse at 18% 15%, #202957 0%, #101735 36%, #0a0e2a 78%)',
@@ -50,8 +50,7 @@ export async function generateSiteImage() {
           }}
         />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 22, position: 'relative' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#b9c4ff', fontSize: 17, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
-            <span style={{ width: 30, height: 1, background: '#b9c4ff', display: 'flex' }} />
+          <div style={{ display: 'flex', alignItems: 'center', color: '#b9c4ff', fontSize: 17, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
             7amdi
           </div>
           <svg
@@ -65,12 +64,10 @@ export async function generateSiteImage() {
             ))}
           </svg>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2, color: 'rgba(255,255,255,.82)', fontFamily: 'Instrument Serif', fontStyle: 'italic', fontSize: 31, lineHeight: 1.25 }}>
-            {content.lines.map((line) => <div key={line}>{line}</div>)}
+            {content.lines
+              .filter((line) => !/\blast\.fm\b|\bkhrya\b/i.test(line))
+              .map((line) => <div key={line}>{line}</div>)}
           </div>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,.18)', paddingTop: 20, color: 'rgba(255,255,255,.62)', fontSize: 16, letterSpacing: '0.06em' }}>
-          <span>@{content.bluesky}</span>
-          <span>TOP ARTISTS · LAST.FM / {content.lastfm.user}</span>
         </div>
       </div>
     ),
