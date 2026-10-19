@@ -256,3 +256,13 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 :root[data-theme=blue] .arabic-copy{color:#242849}
 .intro{font-family:'Instrument Serif',Georgia,'Times New Roman',serif}
 .image-grid a{align-self:start}
+.listening-now{display:flex;align-items:center;gap:12px;margin:12px 0 16px;padding:10px;border:1px solid var(--attie-border-subtle);border-radius:12px;background:color-mix(in srgb,var(--attie-surface-raised) 26%,transparent)}
+.listening-cover{width:52px;height:52px;flex:none;overflow:hidden;border-radius:7px;background:var(--attie-surface-sunken)}
+.listening-cover img{display:block;width:100%;height:100%;object-fit:cover}
+.listening-copy{min-width:0;display:grid;gap:3px}
+.listening-label{display:flex;align-items:center;gap:6px;margin:0;color:var(--attie-fg-subtle);font-size:11px;line-height:1.3}
+.listening-indicator{width:6px;height:6px;flex:none;border-radius:50%;background:var(--attie-fg-subtle)}
+.listening-indicator.is-playing{background:#73c995;box-shadow:0 0 0 3px color-mix(in srgb,#73c995 14%,transparent)}
+.listening-track{width:fit-content;max-width:100%;overflow:hidden;color:var(--attie-fg-default);font-size:15px;line-height:1.35;text-overflow:ellipsis;white-space:nowrap;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:text-decoration-color .2s}
+.listening-track:hover{text-decoration-color:var(--attie-border-default)}
+.listening-artist{overflow:hidden;margin:0;color:var(--attie-fg-muted);font-size:12px;line-height:1.4;text-overflow:ellipsis;white-space:nowrap}

@@ -5,7 +5,16 @@ import SectionHead from './SectionHead';
 import ScrambleHover from '@/components/fancy/text/scramble-hover';
 
 type ChartItem = { name: string; detail?: string; playcount: string; url: string };
-type Charts = { artists: ChartItem[]; songs: ChartItem[] };
+type NowPlaying = {
+  name: string;
+  artist: string;
+  album: string;
+  image: string;
+  url: string;
+  nowPlaying: boolean;
+  playedAt: string;
+};
+type Charts = { artists: ChartItem[]; songs: ChartItem[]; nowPlaying: NowPlaying | null };
 
 function ChartRow({ item, index }: { item: ChartItem; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,13 +40,21 @@ export default function Music() {
     setFailed(false);
     fetch(`${basePath}/api/lastfm.json?v=2&retry=${attempt}`,{signal:ctrl.signal}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(j=>{
       if(!Array.isArray(j?.artists))throw new Error();
-      setCharts({artists:j.artists,songs:Array.isArray(j.songs)?j.songs:[]});
+      setCharts({artists:j.artists,songs:Array.isArray(j.songs)?j.songs:[],nowPlaying:j.nowPlaying??null});
     }).catch(e=>{if(e?.name!=='AbortError')setFailed(true);});
     return()=>ctrl.abort();
   },[attempt]);
   const items=charts?.[chart];
   return <section aria-labelledby="music-heading">
     <SectionHead id="music-heading" title={chart==='artists'?'Top artists':'Top songs'} onTitleClick={()=>setChart(current=>current==='artists'?'songs':'artists')} titleActionLabel={`Switch to ${chart==='artists'?'top songs':'top artists'}`} href={`https://www.last.fm/user/${lastfm.user}`} hint={`last.fm/user/${lastfm.user}`} />
+    {charts?.nowPlaying&&<div className="listening-now">
+      {charts.nowPlaying.image&&<a className="listening-cover" href={charts.nowPlaying.url||`https://www.last.fm/user/${lastfm.user}`} target="_blank" rel="noreferrer" tabIndex={-1} aria-hidden="true"><img src={charts.nowPlaying.image} alt="" loading="lazy" decoding="async" /></a>}
+      <div className="listening-copy">
+        <p className="listening-label"><span className={charts.nowPlaying.nowPlaying?'listening-indicator is-playing':''} aria-hidden="true" />{charts.nowPlaying.nowPlaying?'Listening now':'Last played'}</p>
+        <a className="listening-track" href={charts.nowPlaying.url||`https://www.last.fm/user/${lastfm.user}`} target="_blank" rel="noreferrer">{charts.nowPlaying.name}</a>
+        <p className="listening-artist">{charts.nowPlaying.artist}{charts.nowPlaying.album?` · ${charts.nowPlaying.album}`:''}</p>
+      </div>
+    </div>}
     {failed&&<div className="network-message"><p>Couldn’t reach Last.fm right now — try the profile link above.</p><button type="button" onClick={()=>setAttempt(value=>value+1)}>Try again</button></div>}
     {!failed&&<div className={`artist-list-space ${items?.length===0?'is-settled':''}`} aria-busy={!charts}>
       {!charts&&<div className="artist-skeleton" role="status" aria-label={`Loading top ${chart}`}>
