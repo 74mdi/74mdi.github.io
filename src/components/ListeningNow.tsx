@@ -8,8 +8,9 @@ export default function ListeningNow() {
   const { charts } = useLastFmData();
   const track = charts?.nowPlaying;
   const ref = useRef<HTMLDivElement>(null);
+  const coverRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
-  const [coverOpen, setCoverOpen] = useState(false);
+  const [coverZoomed, setCoverZoomed] = useState(false);
 
   useEffect(() => {
     const element = ref.current;
@@ -29,13 +30,20 @@ export default function ListeningNow() {
   }, [track]);
 
   useEffect(() => {
-    if (!coverOpen) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setCoverOpen(false);
+    if (!coverZoomed) return;
+    const onPointerDown = (event: PointerEvent) => {
+      if (!coverRef.current?.contains(event.target as Node)) setCoverZoomed(false);
     };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setCoverZoomed(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [coverOpen]);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [coverZoomed]);
 
   if (!track) return null;
   const profileUrl = `https://www.last.fm/user/${content.lastfm.user}`;
@@ -48,16 +56,9 @@ export default function ListeningNow() {
         <a href={trackUrl} target="_blank" rel="noreferrer">{track.name}</a>
         {track.artist && <span className="intro-listening-artist">— {track.artist}</span>}
       </p>
-      {track.image && <button type="button" className="intro-listening-cover" onClick={() => setCoverOpen(true)} aria-label={`Enlarge cover art for ${track.name}`}>
+      {track.image && <button ref={coverRef} type="button" className={`intro-listening-cover ${coverZoomed ? 'is-zoomed' : ''}`} onClick={() => setCoverZoomed((zoomed) => !zoomed)} aria-label={`${coverZoomed ? 'Shrink' : 'Enlarge'} cover art for ${track.name}`} aria-expanded={coverZoomed}>
         <img src={track.image} alt="" loading="lazy" decoding="async" />
       </button>}
     </div>
-    {track.image && coverOpen && <div className="cover-lightbox" onClick={() => setCoverOpen(false)}>
-      <div className="cover-lightbox-content" role="dialog" aria-modal="true" aria-label={`${track.name} cover art`} onClick={(event) => event.stopPropagation()}>
-        <button type="button" className="cover-lightbox-close" onClick={() => setCoverOpen(false)} aria-label="Close enlarged cover">Close</button>
-        <img src={track.image} alt={`Album cover for ${track.name}`} />
-        <p>{track.name}{track.artist ? ` · ${track.artist}` : ''}</p>
-      </div>
-    </div>}
   </>;
 }
