@@ -217,9 +217,12 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .writing-page .mdx-demo-label{display:none}
 .mdx-content pre{width:fit-content;max-width:100%}
 .mdx-content pre code{white-space:pre}
-.chart-switch{display:inline-flex;gap:14px;margin:0 0 8px}
-.chart-switch button{padding:4px 0;border:0;border-bottom:1px solid transparent;background:none;color:var(--attie-fg-subtle);font:400 11px Inter,Arial,sans-serif;cursor:pointer;transition:color .2s,border-color .2s}
-.chart-switch button:hover,.chart-switch button[aria-pressed=true]{border-bottom-color:var(--attie-primary);color:var(--attie-fg-default)}
+.section-title-toggle{display:inline-flex;align-items:baseline;padding:0;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px;transition:color .2s ease,text-decoration-color .2s ease}
+.section-title-toggle:hover,.section-title-toggle:focus-visible{color:var(--attie-fg-default);text-decoration-color:var(--attie-border-default)}
+.section-title-toggle:focus-visible{outline:2px solid var(--attie-primary);outline-offset:4px;border-radius:2px}
+.chart-title-swap{display:inline-block;animation:chartTitleSwap .42s cubic-bezier(.22,1,.36,1) both}
+@keyframes chartTitleSwap{from{opacity:0;filter:blur(5px);transform:translateY(4px)}to{opacity:1;filter:blur(0);transform:none}}
+@media(prefers-reduced-motion:reduce){.chart-title-swap{animation:none}}
 .artist-name{display:flex;flex-direction:column}
 .artist-detail{margin-top:2px;color:var(--attie-fg-subtle);font-size:10px;font-weight:300}
 

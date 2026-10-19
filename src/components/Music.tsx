@@ -37,18 +37,14 @@ export default function Music() {
   },[attempt]);
   const items=charts?.[chart];
   return <section aria-labelledby="music-heading">
-    <SectionHead id="music-heading" title={chart==='artists'?'Top artists':'Top songs'} href={`https://www.last.fm/user/${lastfm.user}`} hint={`last.fm/user/${lastfm.user}`} />
-    <div className="chart-switch" role="group" aria-label="Choose Last.fm chart">
-      <button type="button" aria-pressed={chart==='artists'} onClick={()=>setChart('artists')}>Artists</button>
-      <button type="button" aria-pressed={chart==='songs'} onClick={()=>setChart('songs')}>Songs</button>
-    </div>
+    <SectionHead id="music-heading" title={chart==='artists'?'Top artists':'Top songs'} onTitleClick={()=>setChart(current=>current==='artists'?'songs':'artists')} titleActionLabel={`Switch to ${chart==='artists'?'top songs':'top artists'}`} href={`https://www.last.fm/user/${lastfm.user}`} hint={`last.fm/user/${lastfm.user}`} />
     {failed&&<div className="network-message"><p>Couldn’t reach Last.fm right now — try the profile link above.</p><button type="button" onClick={()=>setAttempt(value=>value+1)}>Try again</button></div>}
     {!failed&&<div className={`artist-list-space ${items?.length===0?'is-settled':''}`} aria-busy={!charts}>
       {!charts&&<div className="artist-skeleton" role="status" aria-label={`Loading top ${chart}`}>
         {Array.from({length:8},(_,i)=><div className="artist-skeleton-row" key={i}><i/><i/><i/></div>)}
       </div>}
       {items&&items.length===0&&<p className="muted-copy">No scrobbles yet for this period.</p>}
-      {items&&items.length>0&&<ol className="artist-list artist-list-morph is-visible">
+      {items&&items.length>0&&<ol key={chart} className="artist-list artist-list-morph is-visible">
         {items.map((item,index)=><ChartRow key={`${item.url}-${index}`} item={item} index={index}/>)}
       </ol>}
     </div>}
