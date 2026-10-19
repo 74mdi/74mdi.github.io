@@ -1,13 +1,8 @@
 /dist/
-.vinext/
-.cloudflare/
 /node_modules/
 /.next/
 /out/
-/.vite/
-/.wrangler/
-/cloudflare-env.d.ts
+/dist/
 /tsconfig.tsbuildinfo
 .env*
 !.env.example
-.dev.vars

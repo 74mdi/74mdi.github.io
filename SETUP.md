@@ -1,27 +1,18 @@
 # 7amdi site
 
-Next.js App Router site built with Bun and vinext for Cloudflare Workers.
+This Next.js App Router site is built with Bun and deployed as a static export to GitHub Pages.
 
-## Requirements
+## Local development
 
 - Bun 1.4.3 or newer
-- Node.js 22 or newer for Cloudflare and vinext tooling
+- Node.js 24 or newer
 
-Install dependencies with `bun install`. Common commands:
+Install packages with `bun install`, then run `bun run dev`. Use `bun run build` to create a production build and `bun run start` to serve it locally.
 
-- `bun run dev` — Cloudflare Vite development server
-- `bun run build` — optimized Worker and prerendered static assets
-- `bun run preview` — preview the Vite build
-- `bun run deploy` — deploy to Cloudflare Workers
-- `bun run check:compat` — check the app against vinext's Next.js API support
-- `bun run dev:next` — use the standard Next.js dev server
-
-Set `NEXT_PUBLIC_SITE_URL` to the site's public HTTPS origin in the Cloudflare build environment. This value supplies the canonical URL, sitemap, Open Graph URL, and structured data. It defaults to `https://7amdi.is-a.dev/`.
-
-Set `LASTFM_API_KEY` as a server-side secret to enable top artists. Use `.env.local` for the Next.js development server and `.dev.vars` for the Cloudflare Vite development server (templates are provided). For production, add it as a Cloudflare Worker secret with `bunx wrangler secret put LASTFM_API_KEY`. The key is read by the server-side `/api/lastfm.json` handler and is never included in the browser bundle.
+Copy `.env.example` to `.env.local` and set `LASTFM_API_KEY` to enable the Last.fm charts during local builds. Keep the key server-side; it is used to generate the exported chart data and is not included in the browser bundle.
 
 ## GitHub Pages
 
-The `Deploy Next.js site to GitHub Pages` workflow builds a static export for `https://7amdi.is-a.dev/` and deploys it on pushes to `main` (and every six hours to refresh the Last.fm chart). `public/CNAME` configures this custom domain. The `LASTFM_API_KEY` repository Actions secret is used to generate the chart during each build. This static Pages build embeds the chart data into an exported JSON file; the key remains server-side during the build and is not included in the browser bundle. In repository settings, set Pages' build and deployment source to **GitHub Actions** and the custom domain to `7amdi.is-a.dev`.
+The `Deploy Next.js site to GitHub Pages` workflow builds and publishes the site on pushes to `main`, and every six hours to refresh the Last.fm charts. Add `LASTFM_API_KEY` as a repository Actions secret. `public/CNAME` configures the `7amdi.is-a.dev` custom domain; set the repository Pages source to **GitHub Actions**.
 
-The root route owns the shared metadata, robots policy, sitemap, JSON-LD, and generated Open Graph and Twitter cards. Route-specific pages inherit these defaults and can override them with their own metadata and image routes.
+The root route provides the shared metadata, robots policy, sitemap, JSON-LD, and generated Open Graph and Twitter cards. Writing pages can override these with their own metadata and image routes.
