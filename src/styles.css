@@ -255,3 +255,4 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .arabic-copy .text-highlighter.highlight-on-hover:hover,.arabic-copy .text-highlighter.highlight-on-hover:focus-visible{background-position:right bottom}
 :root[data-theme=blue] .arabic-copy{color:#242849}
 .intro{font-family:'Instrument Serif',Georgia,'Times New Roman',serif}
+.image-grid a{align-self:start}
