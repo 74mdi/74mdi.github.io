@@ -68,14 +68,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="blue" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/koft-arabic-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <script
           dangerouslySetInnerHTML={{
-            __html: "try{if(localStorage.getItem('7amdi-theme')==='blue')document.documentElement.dataset.theme='blue'}catch{}",
+            __html: "try{document.documentElement.dataset.theme=localStorage.getItem('7amdi-theme')==='navy'?'navy':'blue'}catch{document.documentElement.dataset.theme='blue'}",
           }}
         />
       </head>

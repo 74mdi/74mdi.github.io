@@ -14,11 +14,11 @@ const THEME_KEY = '7amdi-theme';
 export default function App({ writingSection }: { writingSection?: ReactNode }) {
   // Keep the server render and the browser's first render identical. Restore
   // the saved preference after hydration to avoid mismatched toggle markup.
-  const [theme, setTheme] = useState<BgTheme>('navy');
+  const [theme, setTheme] = useState<BgTheme>('blue');
   const [themeReady, setThemeReady] = useState(false);
   useEffect(() => {
     try {
-      setTheme(localStorage.getItem(THEME_KEY) === 'blue' ? 'blue' : 'navy');
+      setTheme(localStorage.getItem(THEME_KEY) === 'navy' ? 'navy' : 'blue');
     } catch { /* storage may be unavailable */ }
     setThemeReady(true);
   }, []);
