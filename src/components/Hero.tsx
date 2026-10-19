@@ -47,8 +47,7 @@ export default function Hero() {
       </h1>
     </div>
     <div className="intro">
-      {content.lines.map((line, index) => <p key={index}>{line}</p>)}
-      <ListeningNow />
+      {content.lines.map((line, index) => <p key={index}>{line}{index === content.lines.length - 1 && <> <ListeningNow /></>}</p>)}
     </div>
   </header>;
 }

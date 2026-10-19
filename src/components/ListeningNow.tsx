@@ -49,16 +49,14 @@ export default function ListeningNow() {
   const profileUrl = `https://www.last.fm/user/${content.lastfm.user}`;
   const trackUrl = track.url || profileUrl;
 
-  return <>
-    <div ref={ref} className={`intro-listening ${visible ? 'is-visible' : ''}`}>
-      <p className="intro-listening-line">
-        <span>{track.nowPlaying ? 'Listening now' : 'Last played'}</span>
-        <a href={trackUrl} target="_blank" rel="noreferrer">{track.name}</a>
-        {track.artist && <span className="intro-listening-artist">— {track.artist}</span>}
-      </p>
-      {track.image && <button ref={coverRef} type="button" className={`intro-listening-cover ${coverZoomed ? 'is-zoomed' : ''}`} onClick={() => setCoverZoomed((zoomed) => !zoomed)} aria-label={`${coverZoomed ? 'Shrink' : 'Enlarge'} cover art for ${track.name}`} aria-expanded={coverZoomed}>
-        <img src={track.image} alt="" loading="lazy" decoding="async" />
-      </button>}
-    </div>
-  </>;
+  return <span ref={ref} className={`intro-listening ${visible ? 'is-visible' : ''}`}>
+    <span className="intro-listening-copy">
+      <span>{track.nowPlaying ? '· Listening now:' : '· Last played:'}</span>{' '}
+      <a href={trackUrl} target="_blank" rel="noreferrer">{track.name}</a>
+      {track.artist && <> — <span>{track.artist}</span></>}
+    </span>
+    {track.image && <button ref={coverRef} type="button" className={`intro-listening-cover ${coverZoomed ? 'is-zoomed' : ''}`} onClick={() => setCoverZoomed((zoomed) => !zoomed)} aria-label={`${coverZoomed ? 'Shrink' : 'Enlarge'} cover art for ${track.name}`} aria-expanded={coverZoomed}>
+      <img src={track.image} alt="" loading="lazy" decoding="async" />
+    </button>}
+  </span>;
 }
