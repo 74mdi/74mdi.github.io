@@ -45,7 +45,7 @@ export default function ListeningNow() {
     };
   }, [coverZoomed]);
 
-  if (!track) return null;
+  if (!track?.nowPlaying) return null;
   const profileUrl = `https://www.last.fm/user/${content.lastfm.user}`;
   const trackUrl = track.url || profileUrl;
   const placeholderCovers = [
@@ -56,7 +56,7 @@ export default function ListeningNow() {
 
   return <span ref={ref} className={`intro-listening ${visible ? 'is-visible' : ''}`}>
     <span className="intro-listening-copy">
-      <span>{track.nowPlaying ? '· Listening now:' : '· Last played:'}</span>{' '}
+      <span>· Listening now:</span>{' '}
       <a href={trackUrl} target="_blank" rel="noreferrer">{track.name}</a>
       {track.artist && <> — <span>{track.artist}</span></>}
     </span>
