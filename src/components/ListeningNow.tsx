@@ -48,6 +48,7 @@ export default function ListeningNow() {
   if (!track) return null;
   const profileUrl = `https://www.last.fm/user/${content.lastfm.user}`;
   const trackUrl = track.url || profileUrl;
+  const hasPlaceholderCover = track.image.includes('lastfm-img.freetls.fastly.net/i/u/174s/c3329f87d6a3e64034df59e9f01bd1bb.jpg');
 
   return <span ref={ref} className={`intro-listening ${visible ? 'is-visible' : ''}`}>
     <span className="intro-listening-copy">
@@ -55,7 +56,7 @@ export default function ListeningNow() {
       <a href={trackUrl} target="_blank" rel="noreferrer">{track.name}</a>
       {track.artist && <> — <span>{track.artist}</span></>}
     </span>
-    {track.image && <button ref={coverRef} type="button" className={`intro-listening-cover ${coverZoomed ? 'is-zoomed' : ''}`} onClick={() => setCoverZoomed((zoomed) => !zoomed)} aria-label={`${coverZoomed ? 'Shrink' : 'Enlarge'} cover art for ${track.name}`} aria-expanded={coverZoomed}>
+    {track.image && !hasPlaceholderCover && <button ref={coverRef} type="button" className={`intro-listening-cover ${coverZoomed ? 'is-zoomed' : ''}`} onClick={() => setCoverZoomed((zoomed) => !zoomed)} aria-label={`${coverZoomed ? 'Shrink' : 'Enlarge'} cover art for ${track.name}`} aria-expanded={coverZoomed}>
       <img src={track.image} alt="" loading="lazy" decoding="async" />
     </button>}
   </span>;
