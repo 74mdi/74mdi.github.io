@@ -43,14 +43,14 @@ export default function ListeningNow() {
 
   return <>
     <div ref={ref} className={`intro-listening ${visible ? 'is-visible' : ''}`}>
-      {track.image && <button type="button" className="intro-listening-cover" onClick={() => setCoverOpen(true)} aria-label={`Enlarge cover art for ${track.name}`}>
-        <img src={track.image} alt="" loading="lazy" decoding="async" />
-      </button>}
       <p className="intro-listening-line">
         <span>{track.nowPlaying ? 'Listening now' : 'Last played'}</span>
         <a href={trackUrl} target="_blank" rel="noreferrer">{track.name}</a>
         {track.artist && <span className="intro-listening-artist">— {track.artist}</span>}
       </p>
+      {track.image && <button type="button" className="intro-listening-cover" onClick={() => setCoverOpen(true)} aria-label={`Enlarge cover art for ${track.name}`}>
+        <img src={track.image} alt="" loading="lazy" decoding="async" />
+      </button>}
     </div>
     {track.image && coverOpen && <div className="cover-lightbox" onClick={() => setCoverOpen(false)}>
       <div className="cover-lightbox-content" role="dialog" aria-modal="true" aria-label={`${track.name} cover art`} onClick={(event) => event.stopPropagation()}>
