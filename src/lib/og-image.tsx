@@ -69,7 +69,7 @@ export async function generateSiteImage() {
               .filter((line) => !/\blast\.fm\b|\bkhrya\b/i.test(line))
               .map((line) => <div key={line}>{line}</div>)}
           </div>
-          <div style={{ maxWidth: 1000, color: 'rgba(255,255,255,.62)', fontSize: 18, lineHeight: 1.5 }}>
+          <div style={{ maxWidth: 1000, color: 'rgba(255,255,255,.72)', fontFamily: 'Instrument Serif', fontStyle: 'italic', fontSize: 27, lineHeight: 1.35 }}>
             {siteDescription}
           </div>
         </div>
