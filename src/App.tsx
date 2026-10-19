@@ -8,6 +8,7 @@ import Music from './components/Music';
 import Posts from './components/Posts';
 import CanvasBg, { type BgTheme } from './components/CanvasBg';
 import SiteFooter from './components/SiteFooter';
+import { LastFmDataProvider } from './components/LastFmData';
 
 const THEME_KEY = '7amdi-theme';
 
@@ -30,12 +31,14 @@ export default function App({ writingSection }: { writingSection?: ReactNode }) 
 
   return <div className="site-root">
     <CanvasBg theme={theme} />
-    <main className="main-column">
-      <Hero />
-      <Reveal><Music /></Reveal>
-      {writingSection && <Reveal>{writingSection}</Reveal>}
-      <Reveal><Posts /></Reveal>
-      <Reveal><SiteFooter theme={theme} onToggleTheme={() => setTheme((t) => t === 'navy' ? 'blue' : 'navy')} /></Reveal>
-    </main>
+    <LastFmDataProvider>
+      <main className="main-column">
+        <Hero />
+        <Reveal><Music /></Reveal>
+        {writingSection && <Reveal>{writingSection}</Reveal>}
+        <Reveal><Posts /></Reveal>
+        <Reveal><SiteFooter theme={theme} onToggleTheme={() => setTheme((t) => t === 'navy' ? 'blue' : 'navy')} /></Reveal>
+      </main>
+    </LastFmDataProvider>
   </div>;
 }

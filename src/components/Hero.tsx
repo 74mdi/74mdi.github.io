@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { content } from '../content';
 import { signaturePaths } from '../signaturePaths';
+import ListeningNow from './ListeningNow';
 
 export default function Hero() {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -45,6 +46,9 @@ export default function Hero() {
         </svg>
       </h1>
     </div>
-    <div className="intro">{content.lines.map((line, index) => <p key={index}>{line}</p>)}</div>
+    <div className="intro">
+      {content.lines.map((line, index) => <p key={index}>{line}</p>)}
+      <ListeningNow />
+    </div>
   </header>;
 }
