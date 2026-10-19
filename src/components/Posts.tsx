@@ -54,7 +54,6 @@ function Media({embed,url}:{embed?:EmbedView;url:string}){
   if(embed.$type==='app.bsky.embed.recordWithMedia#view')return <div className="media-stack"><Media embed={embed.media} url={url}/><Quote record={(embed.record as {record?:RecordView}|undefined)?.record}/></div>;
   return null;
 }
-function Skeleton({delay}:{delay:number}){return <div aria-hidden="true" className="skeleton post-card" style={{animationDelay:`${delay}ms`}}><i/><i/><i/><i/></div>;}
 function PostCard({post,index}:{post:FeedPost;index:number}){
   const url=postUrl(post.uri),[visible,setVisible]=useState(false);
   const cardRef=useRef<HTMLElement>(null);
@@ -79,10 +78,9 @@ function PostCard({post,index}:{post:FeedPost;index:number}){
 export default function Posts(){
   const {data,error,loading,retry}=useFeed();
   const posts=(data?.feed??[]).map(f=>f.post).filter(p=>(typeof p.record?.text==='string'&&p.record.text.trim().length>0)||p.embed?.$type);
-  if(!loading&&!error&&posts.length===0)return null;
+  if(loading||(!error&&posts.length===0))return null;
   return <section aria-labelledby="posts-heading"><SectionHead id="posts-heading" title="Posts" href={`https://bsky.app/profile/${content.bluesky}`} hint={`@${content.bluesky}`}/>
-    {loading?<div className="skeleton-stack" role="status" aria-label="Loading posts"><span className="sr-only">Loading posts…</span><Skeleton delay={0}/><Skeleton delay={120}/><Skeleton delay={240}/></div>
-    :error?<div className="network-message"><p>Couldn’t load the latest posts.</p><button type="button" onClick={retry}>Try again</button></div>
+    {error?<div className="network-message"><p>Couldn’t load the latest posts.</p><button type="button" onClick={retry}>Try again</button></div>
     :<ul className="posts-list">{posts.map((p,i)=><PostCard key={p.uri} post={p} index={i}/>)}</ul>}
   </section>;
 }
