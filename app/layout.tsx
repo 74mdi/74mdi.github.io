@@ -83,17 +83,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main className="maintenance-screen">
             <h1>salam!</h1>
           </main>
-        ) : (
-          <>
-            {children}
-            <Script
-              src="https://cloud.umami.is/script.js"
-              data-website-id="b9046e16-295d-4605-9314-af69dbe7a689"
-              data-domains="7amdi.is-a.dev"
-              strategy="afterInteractive"
-            />
-          </>
-        )}
+        ) : children}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="b9046e16-295d-4605-9314-af69dbe7a689"
+          data-domains="7amdi.is-a.dev"
+          strategy="afterInteractive"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
