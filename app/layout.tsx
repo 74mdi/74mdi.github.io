@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import { content } from '../src/content';
 import { siteDescription, siteUrl } from '../src/lib/site';
 import '../src/styles.css';
@@ -82,7 +83,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main className="maintenance-screen">
             <h1>salam!</h1>
           </main>
-        ) : children}
+        ) : (
+          <>
+            {children}
+            <Script
+              src="https://cloud.umami.is/script.js"
+              data-website-id="b9046e16-295d-4605-9314-af69dbe7a689"
+              data-domains="7amdi.is-a.dev"
+              strategy="afterInteractive"
+            />
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
