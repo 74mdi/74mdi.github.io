@@ -78,7 +78,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body>
-        {children}
+        {content.maintenanceMode ? (
+          <main className="maintenance-screen">
+            <h1>salam!</h1>
+          </main>
+        ) : children}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

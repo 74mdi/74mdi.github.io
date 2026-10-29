@@ -263,11 +263,14 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .intro-listening-copy>a:hover{text-decoration-color:var(--attie-border-default)}
 .intro-listening-cover{position:relative;z-index:1;display:inline-block;width:32px;height:32px;flex:none;overflow:hidden;padding:0;border:0;border-radius:4px;background:none;cursor:zoom-in;opacity:0;transform:translateX(8px) scale(.65);transform-origin:center;transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.16,1,.3,1),box-shadow .3s ease}
 .intro-listening.is-visible .intro-listening-cover{opacity:1;transform:scale(1)}
-.intro-listening.is-visible .intro-listening-cover.is-zoomed{z-index:20;transform:scale(4.25);box-shadow:0 20px 55px rgba(0,0,0,.5);cursor:zoom-out}
+.intro-listening.is-visible .intro-listening-cover.is-zoomed{z-index:20;transform:scale(4.25);transform-origin:right bottom;box-shadow:0 20px 55px rgba(0,0,0,.5);cursor:zoom-out}
 .intro-listening-cover img{display:block;width:100%;height:100%;object-fit:cover;border-radius:4px}
 .intro-listening-copy>a:focus-visible,.intro-listening-cover:focus-visible{position:relative;z-index:21}
-@media(max-width:420px){.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(3.25)}}
+@media(max-width:600px){.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(3.25);transform-origin:right bottom}}
 @media(prefers-reduced-motion:reduce){.intro-listening{opacity:1;filter:none;transform:none;transition:none}.intro-listening-cover{opacity:1;transform:none;transition:none}.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(4.25)}}
+@media(max-width:600px) and (prefers-reduced-motion:reduce){.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(3.25);transform-origin:right bottom}}
+.maintenance-screen{position:relative;z-index:1;display:grid;min-height:100svh;place-items:center;padding:24px;text-align:center}
+.maintenance-screen h1{margin:0;color:var(--attie-fg-default);font:italic clamp(56px,12vw,100px)/1 'Instrument Serif',Georgia,'Times New Roman',serif;letter-spacing:-.04em}
 .not-found-page{min-height:100svh;gap:0}
 .not-found-home{display:block;width:min(100%,280px);color:var(--attie-fg-default)}
 .not-found-message{display:flex;flex:1;flex-direction:column;align-items:flex-start;justify-content:center;padding-block:3rem}
