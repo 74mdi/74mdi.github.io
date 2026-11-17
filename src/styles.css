@@ -259,9 +259,11 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .intro-listening{display:inline-flex;position:relative;align-items:center;gap:0 7px;max-width:100%;vertical-align:baseline;opacity:0;filter:blur(7px);transform:translateY(7px) scale(.98);transition:opacity .95s cubic-bezier(.22,1,.36,1),filter .95s cubic-bezier(.22,1,.36,1),transform .95s cubic-bezier(.22,1,.36,1);will-change:opacity,filter,transform}
 .intro-listening.is-visible{opacity:1;filter:none;transform:none}
 
-.maintenance-screen{display:grid;width:100%;height:100svh;place-items:center;overflow:hidden;padding:0;background:var(--attie-surface-page);color:var(--attie-fg-default);font-family:'Instrument Serif',Georgia,'Times New Roman',serif;font-style:italic}
-.maintenance-copy{display:grid;width:110%;height:100%;max-width:none;max-height:100%;margin:0 -5%;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));align-content:center;gap:0 .7em;overflow:hidden;font-size:clamp(1.35rem,4.3vw,4.6rem);font-weight:400;line-height:.92;letter-spacing:-.065em;text-align:center}
-.maintenance-pair{display:flex;align-items:baseline;justify-content:center;gap:.22em;white-space:nowrap}.maintenance-salam{display:inline-block;color:var(--attie-fg-default);will-change:opacity,filter}
+.maintenance-screen{position:relative;width:100%;height:100svh;overflow:hidden;background:linear-gradient(180deg,#0a1230 0%,#111e40 52%,#1b2a52 100%);color:#f1ebe0;font-family:'Instrument Serif',Georgia,'Times New Roman',serif;font-style:italic}
+.marquee-layer{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;pointer-events:none}.marquee-layer-back{z-index:0;opacity:.28;color:#cbd6e5;filter:blur(7px)}.marquee-layer:not(.marquee-layer-back){z-index:1}
+.marquee-row{height:8vh;min-height:8vh;overflow:hidden;white-space:nowrap}.marquee-track{display:flex;width:max-content;height:100%;font-size:clamp(2.5rem,8vh,8rem);line-height:.8;letter-spacing:-.045em;will-change:transform;animation:marquee-left var(--marquee-duration) linear infinite}.marquee-group{display:block;flex:none;white-space:nowrap}.marquee-row-reverse .marquee-track{animation-name:marquee-right}.marquee-layer-back .marquee-track{animation-duration:90s}
+@keyframes marquee-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes marquee-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none!important}}
 .intro-listening-copy{min-width:0}
 .intro-listening-copy>a{color:var(--attie-fg-default);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:text-decoration-color .2s}
 .intro-listening-copy>a:hover{text-decoration-color:var(--attie-border-default)}

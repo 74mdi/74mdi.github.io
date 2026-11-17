@@ -1,31 +1,24 @@
 "use client";
 
-import { useRef } from 'react';
-import TextCursorProximity from './fancy/text/text-cursor-proximity';
+const rows = Array.from({ length: 14 }, (_, index) => index);
+const azulGroup = 'azul! '.repeat(24);
+const salamGroup = 'salam! '.repeat(24);
 
-const words = Array.from({ length: 240 }, (_, index) => index);
+function MarqueeRows({ word, background = false }: { word: string; background?: boolean }) {
+  return (
+    <div className={`marquee-layer${background ? ' marquee-layer-back' : ''}`} aria-hidden="true">
+      {rows.map((row) => (
+        <div className={`marquee-row ${row % 2 ? 'marquee-row-reverse' : ''}`} key={row}>
+          <div className="marquee-track" style={{ '--marquee-duration': `${[32, 40, 55][row % 3]}s` } as React.CSSProperties}>
+            <span className="marquee-group">{word}</span>
+            <span className="marquee-group">{word}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function MaintenanceMode() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <main ref={containerRef} className="maintenance-screen">
-      <p className="maintenance-copy">
-        {words.map((word) => (
-          <span className="maintenance-pair" key={word}>
-            <span>azul!</span>{' '}
-            <TextCursorProximity
-              className="maintenance-salam"
-              styles={{ opacity: { from: 0.16, to: 0.72 }, filter: { from: 'blur(4px)', to: 'blur(0px)' } }}
-              falloff="linear"
-              radius={115}
-              containerRef={containerRef}
-            >
-              salam!
-            </TextCursorProximity>{' '}
-          </span>
-        ))}
-      </p>
-    </main>
-  );
+  return <main className="maintenance-screen"><MarqueeRows word={salamGroup} background /><MarqueeRows word={azulGroup} /></main>;
 }
