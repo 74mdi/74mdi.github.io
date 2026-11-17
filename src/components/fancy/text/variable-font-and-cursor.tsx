@@ -13,14 +13,20 @@ export default function VariableFontAndCursor({ children, as = 'span', fontVaria
   const spanRef = useRef<HTMLElement>(null);
   const interpolate = useCallback((x: number, y: number) => {
     const container = containerRef.current;
-    if (!container) return '';
+    if (!container) return { settings: '', xProgress: 0.5, yProgress: 0.5 };
     const xProgress = Math.min(Math.max(x / container.clientWidth, 0), 1);
     const yProgress = Math.min(Math.max(y / container.clientHeight, 0), 1);
     const xValue = fontVariationMapping.x.min + (fontVariationMapping.x.max - fontVariationMapping.x.min) * xProgress;
     const yValue = fontVariationMapping.y.min + (fontVariationMapping.y.max - fontVariationMapping.y.min) * yProgress;
-    return `'${fontVariationMapping.x.name}' ${xValue}, '${fontVariationMapping.y.name}' ${yValue}`;
+    return { settings: `'${fontVariationMapping.x.name}' ${xValue}, '${fontVariationMapping.y.name}' ${yValue}`, xProgress, yProgress };
   }, [containerRef, fontVariationMapping]);
-  useAnimationFrame(() => { if (spanRef.current) spanRef.current.style.fontVariationSettings = interpolate(mousePositionRef.current.x, mousePositionRef.current.y); });
+  useAnimationFrame(() => {
+    if (!spanRef.current) return;
+    const { settings, xProgress, yProgress } = interpolate(mousePositionRef.current.x, mousePositionRef.current.y);
+    spanRef.current.style.fontVariationSettings = settings;
+    // Instrument Serif is static, so this keeps the cursor response visible as a graceful fallback.
+    spanRef.current.style.transform = `skewX(${(-5 + xProgress * 10).toFixed(2)}deg) scaleX(${(0.94 + yProgress * 0.12).toFixed(3)})`;
+  });
   const MotionComponent = motion.create(as);
   return <MotionComponent ref={spanRef} className={className} data-text={children} {...props}><span className="inline-block">{children}</span></MotionComponent>;
 }
