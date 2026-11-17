@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { content } from '../src/content';
 import { siteDescription, siteUrl } from '../src/lib/site';
+import MaintenanceMode from '../src/components/MaintenanceMode';
 import '../src/styles.css';
 
 export const metadata: Metadata = {
@@ -80,9 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         {content.maintenanceMode ? (
-          <main className="maintenance-screen">
-            <h1>salam!</h1>
-          </main>
+          <MaintenanceMode />
         ) : children}
         <Script
           src="https://cloud.umami.is/script.js"
