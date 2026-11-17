@@ -259,8 +259,9 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .intro-listening{display:inline-flex;position:relative;align-items:center;gap:0 7px;max-width:100%;vertical-align:baseline;opacity:0;filter:blur(7px);transform:translateY(7px) scale(.98);transition:opacity .95s cubic-bezier(.22,1,.36,1),filter .95s cubic-bezier(.22,1,.36,1),transform .95s cubic-bezier(.22,1,.36,1);will-change:opacity,filter,transform}
 .intro-listening.is-visible{opacity:1;filter:none;transform:none}
 
-.maintenance-screen{display:grid;min-height:100svh;place-items:center;overflow:hidden;padding:2rem;background:var(--attie-surface-page);color:var(--attie-fg-default);font-family:Arial,'Helvetica Neue',sans-serif}
-.maintenance-screen p{max-width:100%;margin:0;font-size:clamp(2rem,6vw,5rem);font-weight:500;line-height:1.08;letter-spacing:-.06em;overflow-wrap:anywhere;text-align:center}
+.maintenance-screen{display:grid;width:100%;height:100svh;place-items:center;overflow:hidden;padding:clamp(1rem,3vw,3rem);background:var(--attie-surface-page);color:var(--attie-fg-default);font-family:Arial,'Helvetica Neue',Helvetica,sans-serif}
+.maintenance-copy{width:100%;max-width:1500px;max-height:100%;margin:0;overflow:hidden;font-size:clamp(1.65rem,5.2vw,5.5rem);font-weight:400;line-height:.98;letter-spacing:-.065em;text-align:center;overflow-wrap:anywhere}
+.maintenance-pair{display:inline}.maintenance-salam{display:inline-block;color:var(--attie-fg-default);will-change:opacity,filter}
 .intro-listening-copy{min-width:0}
 .intro-listening-copy>a{color:var(--attie-fg-default);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:text-decoration-color .2s}
 .intro-listening-copy>a:hover{text-decoration-color:var(--attie-border-default)}
@@ -272,8 +273,7 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 @media(max-width:600px){.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(3.25);transform-origin:right bottom}}
 @media(prefers-reduced-motion:reduce){.intro-listening{opacity:1;filter:none;transform:none;transition:none}.intro-listening-cover{opacity:1;transform:none;transition:none}.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(4.25)}}
 @media(max-width:600px) and (prefers-reduced-motion:reduce){.intro-listening.is-visible .intro-listening-cover.is-zoomed{transform:scale(3.25);transform-origin:right bottom}}
-.maintenance-screen{position:relative;z-index:1;display:grid;min-height:100svh;place-items:center;padding:24px;text-align:center}
-.maintenance-screen h1{margin:0;color:var(--attie-fg-default);font:italic clamp(56px,12vw,100px)/1 'Instrument Serif',Georgia,'Times New Roman',serif;letter-spacing:-.04em}
+.maintenance-screen{position:relative;z-index:1}
 .not-found-page{min-height:100svh;gap:0}
 .not-found-home{display:block;width:min(100%,280px);color:var(--attie-fg-default)}
 .not-found-message{display:flex;flex:1;flex-direction:column;align-items:flex-start;justify-content:center;padding-block:3rem}
