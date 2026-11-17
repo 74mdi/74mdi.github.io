@@ -26,7 +26,10 @@ export default function VariableFontAndCursor({ children, as = 'span', fontVaria
     const { settings, xProgress, yProgress } = interpolate(mousePositionRef.current.x, mousePositionRef.current.y);
     spanRef.current.style.fontVariationSettings = settings;
     // Instrument Serif is static, so this keeps the cursor response visible as a graceful fallback.
-    if (innerRef.current) innerRef.current.style.transform = `skewX(${(-2.5 + xProgress * 5).toFixed(2)}deg) scaleX(${(0.98 + yProgress * 0.04).toFixed(3)})`;
+    if (innerRef.current) {
+      innerRef.current.style.transform = `skewX(${(-2.5 + xProgress * 5).toFixed(2)}deg)`;
+      innerRef.current.style.fontWeight = String(Math.round(100 + yProgress * 800));
+    }
   });
   const MotionComponent = motion.create(as);
   return <MotionComponent ref={spanRef} className={className} data-text={children} {...props}><span ref={innerRef} className="variable-font-inner">{children}</span></MotionComponent>;

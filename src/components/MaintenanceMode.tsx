@@ -14,8 +14,8 @@ function MarqueeRows({ word, containerRef, background = false }: { word: string;
       {rows.map((row) => (
         <div className={`marquee-row ${row % 2 ? 'marquee-row-reverse' : ''}`} key={row}>
           <div className="marquee-track" style={{ '--marquee-duration': `${[32, 40, 55][row % 3]}s` } as React.CSSProperties}>
-            <VariableFontAndCursor className="marquee-group" fontVariationMapping={{ x: { name: 'slnt', min: -4, max: -14 }, y: { name: 'wght', min: 300, max: 650 } }} containerRef={containerRef}>{word}</VariableFontAndCursor>
-            <VariableFontAndCursor className="marquee-group" fontVariationMapping={{ x: { name: 'slnt', min: -4, max: -14 }, y: { name: 'wght', min: 300, max: 650 } }} containerRef={containerRef}>{word}</VariableFontAndCursor>
+            <VariableFontAndCursor className="marquee-group" fontVariationMapping={{ y: { name: 'wght', min: 100, max: 900 }, x: { name: 'slnt', min: 0, max: -10 } }} containerRef={containerRef}>{word}</VariableFontAndCursor>
+            <VariableFontAndCursor className="marquee-group" fontVariationMapping={{ y: { name: 'wght', min: 100, max: 900 }, x: { name: 'slnt', min: 0, max: -10 } }} containerRef={containerRef}>{word}</VariableFontAndCursor>
           </div>
         </div>
       ))}
