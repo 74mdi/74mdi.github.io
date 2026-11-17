@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import TextCursorProximity from './fancy/text/text-cursor-proximity';
 
-const words = Array.from({ length: 72 }, (_, index) => index);
+const words = Array.from({ length: 240 }, (_, index) => index);
 
 export default function MaintenanceMode() {
   const containerRef = useRef<HTMLDivElement>(null);
