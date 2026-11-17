@@ -16,7 +16,7 @@ export default function MaintenanceMode() {
             <span>azul!</span>{' '}
             <TextCursorProximity
               className="maintenance-salam"
-              styles={{ opacity: { from: 0, to: 1 }, filter: { from: 'blur(8px)', to: 'blur(0px)' } }}
+              styles={{ opacity: { from: 0.16, to: 0.72 }, filter: { from: 'blur(4px)', to: 'blur(0px)' } }}
               falloff="linear"
               radius={115}
               containerRef={containerRef}
