@@ -12,6 +12,7 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  experimental: { agentUpgrade: 'security' },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   ...(process.env.GITHUB_PAGES === 'true'
     ? { output: 'export' as const, trailingSlash: true }
