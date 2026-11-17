@@ -12,6 +12,7 @@ export default function VariableFontAndCursor({ children, as = 'span', fontVaria
   const mousePositionRef = useMousePositionRef(containerRef);
   const spanRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLSpanElement>(null);
+  const smoothPositionRef = useRef({ x: 0, y: 0 });
   const interpolate = useCallback((x: number, y: number) => {
     const container = containerRef.current;
     if (!container) return { settings: '', xProgress: 0.5, yProgress: 0.5 };
@@ -23,12 +24,14 @@ export default function VariableFontAndCursor({ children, as = 'span', fontVaria
   }, [containerRef, fontVariationMapping]);
   useAnimationFrame(() => {
     if (!spanRef.current) return;
-    const { settings, xProgress, yProgress } = interpolate(mousePositionRef.current.x, mousePositionRef.current.y);
+    smoothPositionRef.current.x += (mousePositionRef.current.x - smoothPositionRef.current.x) * 0.12;
+    smoothPositionRef.current.y += (mousePositionRef.current.y - smoothPositionRef.current.y) * 0.12;
+    const { settings, xProgress, yProgress } = interpolate(smoothPositionRef.current.x, smoothPositionRef.current.y);
     spanRef.current.style.fontVariationSettings = settings;
-    // Instrument Serif is static, so this keeps the cursor response visible as a graceful fallback.
+    // Instrument Serif is static, so this keeps the cursor response visible without swapping weights.
     if (innerRef.current) {
       innerRef.current.style.transform = `skewX(${(-2.5 + xProgress * 5).toFixed(2)}deg)`;
-      innerRef.current.style.fontWeight = String(Math.round(100 + yProgress * 800));
+      innerRef.current.style.webkitTextStroke = `${(yProgress * 0.32).toFixed(2)}px currentColor`;
     }
   });
   const MotionComponent = motion.create(as);
