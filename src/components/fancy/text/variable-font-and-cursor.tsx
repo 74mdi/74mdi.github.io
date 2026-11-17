@@ -11,6 +11,7 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> { children: React.
 export default function VariableFontAndCursor({ children, as = 'span', fontVariationMapping, className, containerRef, ...props }: TextProps) {
   const mousePositionRef = useMousePositionRef(containerRef);
   const spanRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLSpanElement>(null);
   const interpolate = useCallback((x: number, y: number) => {
     const container = containerRef.current;
     if (!container) return { settings: '', xProgress: 0.5, yProgress: 0.5 };
@@ -25,8 +26,8 @@ export default function VariableFontAndCursor({ children, as = 'span', fontVaria
     const { settings, xProgress, yProgress } = interpolate(mousePositionRef.current.x, mousePositionRef.current.y);
     spanRef.current.style.fontVariationSettings = settings;
     // Instrument Serif is static, so this keeps the cursor response visible as a graceful fallback.
-    spanRef.current.style.transform = `skewX(${(-5 + xProgress * 10).toFixed(2)}deg) scaleX(${(0.94 + yProgress * 0.12).toFixed(3)})`;
+    if (innerRef.current) innerRef.current.style.transform = `skewX(${(-2.5 + xProgress * 5).toFixed(2)}deg) scaleX(${(0.98 + yProgress * 0.04).toFixed(3)})`;
   });
   const MotionComponent = motion.create(as);
-  return <MotionComponent ref={spanRef} className={className} data-text={children} {...props}><span className="inline-block">{children}</span></MotionComponent>;
+  return <MotionComponent ref={spanRef} className={className} data-text={children} {...props}><span ref={innerRef} className="variable-font-inner">{children}</span></MotionComponent>;
 }
