@@ -260,8 +260,8 @@ body,.site-root,.post-card,.theme-toggle{transition:background-color .35s ease,c
 .intro-listening.is-visible{opacity:1;filter:none;transform:none}
 
 .maintenance-screen{display:grid;width:100%;height:100svh;place-items:center;overflow:hidden;padding:0;background:var(--attie-surface-page);color:var(--attie-fg-default);font-family:'Instrument Serif',Georgia,'Times New Roman',serif;font-style:italic}
-.maintenance-copy{width:110%;max-width:none;max-height:100%;margin:0 -5%;overflow:hidden;font-size:clamp(1.65rem,5.2vw,5.5rem);font-weight:400;line-height:.92;letter-spacing:-.065em;text-align:center;overflow-wrap:anywhere}
-.maintenance-pair{display:inline}.maintenance-salam{display:inline-block;color:var(--attie-fg-default);will-change:opacity,filter}
+.maintenance-copy{display:grid;width:110%;height:100%;max-width:none;max-height:100%;margin:0 -5%;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));align-content:center;gap:0 .7em;overflow:hidden;font-size:clamp(1.35rem,4.3vw,4.6rem);font-weight:400;line-height:.92;letter-spacing:-.065em;text-align:center}
+.maintenance-pair{display:flex;align-items:baseline;justify-content:center;gap:.22em;white-space:nowrap}.maintenance-salam{display:inline-block;color:var(--attie-fg-default);will-change:opacity,filter}
 .intro-listening-copy{min-width:0}
 .intro-listening-copy>a{color:var(--attie-fg-default);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:text-decoration-color .2s}
 .intro-listening-copy>a:hover{text-decoration-color:var(--attie-border-default)}
