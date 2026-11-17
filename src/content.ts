@@ -1,7 +1,7 @@
 /** Editable public content for the site. Last.fm credentials live in the server environment. */
 export const content = {
   /** Set true to temporarily replace every page with a centered “salam!”. */
-  maintenanceMode: false,
+  maintenanceMode: true,
   name: '7amdi',
   lines: [
     'I’m a developer building things for the web.',
